@@ -74,7 +74,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="MyTickets" asp-action="Index">MyTickets</a>
                             </li>
 
-
+                            
 
                             @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
                             {

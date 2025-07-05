@@ -27,8 +27,12 @@ public partial class MehujuhlatContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //    => optionsBuilder.UseSqlServer("Server=DESKTOP-BA80A56\\SQLEXPRESS;Database=Mehujuhlat;Trusted_Connection=True;user id=sa;password=testi;trustservercertificate=True;");
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-BA80A56\\SQLEXPRESS;Database=Mehujuhlat;Trusted_Connection=True;user id=sa;password=testi;trustservercertificate=True;");
+    => optionsBuilder.UseSqlServer("REMOVED");
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
