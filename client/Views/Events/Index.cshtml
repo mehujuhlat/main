@@ -1,0 +1,28 @@
+﻿@model client.Controllers.EventsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Upcoming events</h2>
+
+@foreach (var item in Model.ComingEvents) {
+            
+           
+                var DateStart = item.Date.HasValue ? item.Date.Value.ToString("dd.MM.yyyy HH:mm"):"";
+                var DateEnd = item.Date.HasValue ? item.DateEnd.Value.ToString("dd.MM.yyyy HH:mm") : "";
+
+               <h4><a asp-action="Details" asp-route-id="@item.EventId">@Html.DisplayFor(modelItem => item.Name)</a></h4>
+               <div style="font-weight:bold"> @DateStart - @DateEnd </div> 
+}
+<hr/>
+<h2>Past events</h2>
+@foreach (var item in Model.PastEvents)
+{
+    var DateStart = item.Date.HasValue ? item.Date.Value.ToString("dd.MM.yyyy") : "";
+    var DateEnd = item.Date.HasValue ? item.DateEnd.Value.ToString("dd.MM.yyyy") : "";
+
+    <h4><a asp-action="Details" asp-route-id="@item.EventId">@Html.DisplayFor(modelItem => item.Name)</a></h4>
+    <div style="font-weight:bold"> @DateStart - @DateEnd </div>
+}
+  

@@ -1,4 +1,19 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@inject client.App_Code.IMessageService MessageService
+
+@{
+    var unreadCount = 0;
+    if (User.Identity.IsAuthenticated)
+    {
+        var userId = @User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (int.TryParse(userId, out int id))
+        {
+            unreadCount = MessageService.GetUnreadMessageCount(id);
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,19 +27,82 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">client</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Porvoon Mehujuhlat</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
+    
+
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
                         </li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MyMessages" asp-action="Index">MyMessages</a>
+                            </li>
+                            @if (unreadCount > 0)
+                            {
+                                <li class="nav-item">
+                                    (@unreadCount)
+                                </li>
+                            }
+
+                        }
+                        @if (!User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
+                            </li>
+
+                        }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MyData" asp-action="Index">MyData</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MyTickets" asp-action="Index">MyTickets</a>
+                            </li>
+
+
+
+                            @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
+                                        Admin
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Events" asp-action="Index">Events</a>
+                                    </div>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                            </li>
+                            // @User.FindFirst(ClaimTypes.NameIdentifier)?.Value -
+                            <li class="nav-item">
+                                ( @User.Identity.Name - @User.FindFirst(ClaimTypes.GivenName)?.Value  )
+                            </li>
+
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

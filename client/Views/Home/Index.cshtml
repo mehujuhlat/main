@@ -1,8 +1,38 @@
-﻿@{
+﻿@model IEnumerable<Event>
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <img src="~/images/main.png" alt="Kuvaus" class="img-class">
+    @foreach (var item in Model)
+    {
+        <script>
+            @{
+                    var dateString = item.Date.HasValue ? item.Date.Value.ToString("o"):"";
+                   var startDate = item.Date.HasValue ? item.Date.Value.ToString("dd.MM.yyyy HH:mm") : "";
+            }
+
+            setInterval(function() {
+      
+                     var endDate = moment("@dateString");
+                    var now = moment();
+                    var diff = moment.duration(endDate.diff(now));
+
+                    document.getElementById('@Html.DisplayFor(modelItem => item.EventId)').innerHTML =
+                Math.floor(diff.asDays()) + " päivää " +
+                diff.hours() + " tuntia " +
+                diff.minutes() + " minuuttia " +
+                diff.seconds() + " sekuntia";
+            }, 1000);
+        </script>
+        <h3> <a href="/Events/Details/@item.EventId">@Html.DisplayFor(modelItem => item.Name)</a></h3>
+        <div><strong>@startDate</strong></div>
+        <div id="@Html.DisplayFor(modelItem => item.EventId)"></div>
+    }
+
+ 
 </div>
+
+

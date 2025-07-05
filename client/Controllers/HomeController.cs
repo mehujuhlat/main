@@ -1,6 +1,9 @@
+using System;
 using System.Diagnostics;
 using client.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace client.Controllers
 {
@@ -8,14 +11,19 @@ namespace client.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        private readonly MehujuhlatContext _context;
+
+        public HomeController(ILogger<HomeController> logger, MehujuhlatContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var events = await _context.Events.Where(p=>p.Active==true).ToListAsync();
+            return View(events);
         }
 
         public IActionResult Privacy()

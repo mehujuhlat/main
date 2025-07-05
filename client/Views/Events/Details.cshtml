@@ -1,0 +1,73 @@
+﻿@using System.Security.Claims
+@model client.Models.Event
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+@{
+ var DateStart = Model.Date.HasValue ? Model.Date.Value.ToString("dd.MM.yyyy HH:mm"):"";
+ var DateEnd = Model.Date.HasValue ? Model.DateEnd.Value.ToString("dd.MM.yyyy HH:mm") : "";
+ bool active = Model.Active.HasValue ? Model.Active.Value : false;
+ }
+
+<div>
+ 
+    <dl class="row">
+        <dd class = "col-sm-10">
+            <h3>@Html.DisplayFor(model => model.Name)</h3>
+        </dd>
+        <dd class="col-sm-10">
+            @DateStart -  @DateEnd
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Description)
+        </dd>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Program)
+        </dd>
+        <hr />
+        <dd class="col-sm-10">
+        @foreach ( var item in Model.Images)
+        {
+            <img src="@item.Url" alt="@item.Title">
+        }
+        </dd>
+
+        <hr />
+        <dd class="col-sm-10">
+       
+        <ul>
+            @foreach (var item in Model.Tickets)
+            {
+               <li>@item.Description - @item.Price €</li>
+            }
+        </ul>
+        </dd>
+        @if ( active)
+        {
+            @if (User.Identity.IsAuthenticated)
+            {
+                <dd class="col-sm-10">
+                    <a href="/MyTickets/Buy/@Model.EventId">Osta lippu tapahtumaan</a>
+                </dd>
+
+                @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
+                {
+                    <dd class="col-sm-10">
+                    <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.EventId">Muokkaa</a>
+                    </dd>
+                }
+            } else
+            {
+                <dd class="col-sm-10">
+                    <a href="/Register">Rekisteröidy ostaaksesi lipun tapahtumaan</a>
+                </dd>
+            }
+        }
+   
+
+    </dl>
+</div>
+<div>
+</div>
