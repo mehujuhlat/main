@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using client.App_Code;
 using Microsoft.EntityFrameworkCore;
 
 namespace client.Models;
 
 public partial class MehujuhlatContext : DbContext
 {
+  
     public MehujuhlatContext()
     {
+        
     }
 
     public MehujuhlatContext(DbContextOptions<MehujuhlatContext> options)
@@ -31,9 +34,9 @@ public partial class MehujuhlatContext : DbContext
     //    => optionsBuilder.UseSqlServer("Server=DESKTOP-BA80A56\\SQLEXPRESS;Database=Mehujuhlat;Trusted_Connection=True;user id=sa;password=testi;trustservercertificate=True;");
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer("REMOVED");
+    => optionsBuilder.UseSqlServer("Server=mehujuhlat.database.windows.net;Database=mehujuhlatdb;Trusted_Connection=False;user id=mehujuhlatadmin;password="+AppSecrets.DbPassword+";trustservercertificate=True;");
 
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>(entity =>

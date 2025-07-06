@@ -116,12 +116,22 @@ namespace client.Controllers
                 int idx = -1;
                 Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out idx);
                 pticket.UserId = idx;
-                Ticket t = await _context.Tickets.FindAsync(pticket.TicketId);
+                // Ticket t = await _context.Tickets.FindAsync(pticket.TicketId);
+                Ticket t = await _context.Tickets.Include(t => t.Event).FirstOrDefaultAsync(t => t.TicketId == pticket.TicketId);
                 pticket.Price = t.Price;
                 pticket.Date = DateTime.Now;
                 pticket.Code = Helper.GenerateRandomString(10);
                 pticket.Valid = true;
                 _context.Add(pticket);
+
+                User u = await _context.Users.FindAsync(idx);
+                string body = "";
+                body += "Moi <strong>" + u.Nickname +"</strong><br>";
+                body += "Olet ostanut lipun tapahtumaan " + t.Event.Name + " henkilölle " + pticket.Firstname + " " + pticket.Lastname+"<br>";
+                body += "Tässä lipun qr<br>";
+                body += "<img src=\""+Helper.appUrl+"/Api/GenQr/"+pticket.Code+"\"><br>";
+                Helper.sendMail(u.Email, "Lipunosto mehujuhliin", body);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
