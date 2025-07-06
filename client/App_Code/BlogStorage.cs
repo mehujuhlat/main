@@ -12,12 +12,15 @@ namespace client.App_Code
 
         public AzureBlobStorageService(IConfiguration config)
         {
-            _connectionString = config["AzureStorage:ConnectionString"];
+            var rawConnection = config["AzureStorage:ConnectionString"];
+            _connectionString = rawConnection.Replace("**blobkey**", config["blobkey"]);
             _containerName = config["AzureStorage:ContainerName"];
         }
         //Guid.NewGuid()
         public async Task<string> UploadImageAsync(IFormFile file)
         {
+
+            Debug.WriteLine("CONNECTION STRING " + _connectionString);
             var blobServiceClient = new BlobServiceClient(_connectionString);
             var blobContainerClient = blobServiceClient.GetBlobContainerClient(_containerName);
             await blobContainerClient.CreateIfNotExistsAsync(PublicAccessType.Blob);
