@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace client.Controllers
@@ -72,11 +73,16 @@ namespace client.Controllers
                 if (nicknameInUse)
                     ViewBag.nicknameInUse = "Lempinimi on jo käytössä";
 
-                if ( nicknameInUse || emailInUse )
+                if ( nicknameInUse || emailInUse || !emailIsCorrect)
                     return View("Index",user);
 
                 string newId = Helper.GenerateRandomString(10);
                 NewUser.Store(newId, user, TimeSpan.FromHours(10));
+
+                string body = "";
+                body += "Vahvista rekisteröitymisesi Mehujuhliin linkistä <br>";
+                body += "<a href=\""+Helper.appUrl+"/Register/Confirm/"+newId+"\">"+Helper.appUrl+"/Register/Confirm/"+newId+"</a>";
+                Helper.sendMail(user.Email, "Tervetuloa mehujuhliin "+user.Nickname, body);
                 ViewBag.newId = newId;
                 return View("Validation", user);
             }
