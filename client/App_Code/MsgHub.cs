@@ -18,7 +18,6 @@ namespace client.App_Code
 
         public async Task SendMessage(string receiverStr, string message, bool Private)
         {
-            Debug.WriteLine("Invoke Sendmessage");
             var idstr = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             int id = -1;
             int.TryParse(idstr, out id);

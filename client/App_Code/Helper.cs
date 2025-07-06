@@ -4,14 +4,37 @@ using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
+
 
 namespace client.App_Code
 {
+    public static class AppSecrets
+    {
+        public static string DbPassword { get; private set; } = null!;
+        public static string EmailPassword { get; private set; } = null!;
+
+        public static void Initialize(IConfiguration config)
+        {
+            DbPassword = config["dbpassword"] ?? throw new Exception("dbpassword missing");
+            EmailPassword = config["emailpassword"] ?? throw new Exception("emailpassword missing");
+        }
+    }
+
 
     public static class Helper
     {
-
         public static string appUrl = "https://localhost:7137";
+
+        /*
+        public static string GetSecret(string secretName)
+        {
+            var kvUri = $"https://mehujuhlat.vault.azure.net";
+            var client = new SecretClient(new Uri(kvUri), new DefaultAzureCredential());
+            KeyVaultSecret secret = client.GetSecret(secretName);
+            return  secret.Value;
+        }*/
 
         public static string GenerateRandomString(int length)
         {
@@ -68,7 +91,7 @@ namespace client.App_Code
                 smtpClient.EnableSsl = true;
                 smtpClient.UseDefaultCredentials = false;
                 //REMOVED = new System.Net.NetworkCredential("8be7a6001@smtp-brevo.com", "qTmdJFPEUAyzIg3M");
-                smtpClient.Credentials = new System.Net.NetworkCredential("tuomas.kokki@tupitek.fi", "REMOVED");
+                smtpClient.Credentials = new System.Net.NetworkCredential("tuomas.kokki@tupitek.fi", AppSecrets.EmailPassword);
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("tuomas.kokki@tupitek.fi");
