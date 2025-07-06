@@ -59,6 +59,11 @@ namespace client.Controllers
                 user.Password = Psw.HashPassword(user.Password, salt);
                 user.Salt = salt;
 
+                if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True") && user.UserId == id)
+                {
+                    user.Admin = true;
+                }
+
                 try
                 {
                     _context.Update(user);
