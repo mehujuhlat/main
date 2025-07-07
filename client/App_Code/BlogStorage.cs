@@ -12,8 +12,9 @@ namespace client.App_Code
 
         public AzureBlobStorageService(IConfiguration config)
         {
-            var rawConnection = config["AzureStorage:ConnectionString"];
-            _connectionString = rawConnection.Replace("**blobkey**", config["blobkey"]);
+            _connectionString = config["blobconnection"];
+            //var rawConnection = config["AzureStorage:ConnectionString"];
+            //_connectionString = rawConnection.Replace("**blobkey**", config["blobkey"]);
             _containerName = config["AzureStorage:ContainerName"];
         }
         //Guid.NewGuid()
