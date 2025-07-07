@@ -12,12 +12,9 @@ namespace client.App_Code
 {
     public static class AppSecrets
     {
-        public static string DbPassword { get; private set; } = null!;
         public static string EmailPassword { get; private set; } = null!;
-
         public static void Initialize(IConfiguration config)
-        {
-            DbPassword = config["dbpassword"] ?? throw new Exception("dbpassword missing");
+        {  
             EmailPassword = config["emailpassword"] ?? throw new Exception("emailpassword missing");
         }
     }
