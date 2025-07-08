@@ -83,16 +83,13 @@ namespace client.App_Code
         {
             try
             {
-                //SmtpClient smtpClient = new SmtpClient("smtp-relay.brevo.com", 587);
                 SmtpClient smtpClient = new SmtpClient("mail.tupitek.fi", 587);
                 smtpClient.EnableSsl = true;
                 smtpClient.UseDefaultCredentials = false;
-                //REMOVED = new System.Net.NetworkCredential("8be7a6001@smtp-brevo.com", "qTmdJFPEUAyzIg3M");
                 smtpClient.Credentials = new System.Net.NetworkCredential("tuomas.kokki@tupitek.fi", AppSecrets.EmailPassword);
                 smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.From = new MailAddress("tuomas.kokki@tupitek.fi");
-                //mailMessage.From = new MailAddress("8be7a6001@smtp-brevo.com");
                 mailMessage.To.Add(email);
                 mailMessage.Subject = subject;
                 mailMessage.Body = body;
