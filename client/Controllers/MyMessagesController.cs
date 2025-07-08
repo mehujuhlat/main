@@ -138,12 +138,15 @@ namespace client.Controllers
 
             int  idx = -1;
             Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out idx);
-           
-    
-            if (message.SenderId != idx)
+
+
+            bool admin = User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
+
+            if (message.SenderId != idx && admin == false  )
             {
                 return Forbid();
             }
+
             _context.Messages.Remove(message);
             await _context.SaveChangesAsync();
 

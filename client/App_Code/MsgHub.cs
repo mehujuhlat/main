@@ -44,14 +44,20 @@ namespace client.App_Code
             var sender = await _context.Users.FirstOrDefaultAsync(m => m.UserId == id);
             var receiver = await _context.Users.FirstOrDefaultAsync(m => m.UserId == receiverId);
 
+            bool admin = Context.User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
+
+
             if (receiver?.Nickname != null)
                 receiverNickname = receiver.Nickname;
-                
+
             if (!Private)
-                await Clients.Others.SendAsync("ReceiveMessage", id, sender?.Nickname, receiverId, receiverNickname, msg.MessageId, msg.Message1, msg.Date?.ToString(), false, false);
+            {
+                await Clients.Others.SendAsync("ReceiveMessage", id, sender?.Nickname, receiverId, receiverNickname, msg.MessageId, msg.Message1, msg.Date?.ToString(), admin, false);
+            }
             else
-                await Clients.User(receiverStr).SendAsync("ReceiveMessage", id, sender?.Nickname, receiverId, receiver?.Nickname, msg.MessageId, msg.Message1, msg.Date?.ToString(),false,true);
-            
+            {
+                await Clients.User(receiverStr).SendAsync("ReceiveMessage", id, sender?.Nickname, receiverId, receiver?.Nickname, msg.MessageId, msg.Message1, msg.Date?.ToString(), admin, true);
+            }
             await Clients.User(idstr).SendAsync("ReceiveMessage", id, sender?.Nickname, receiverId, receiverNickname, msg.MessageId, msg.Message1, msg.Date?.ToString(), true, Private);
 
         }
