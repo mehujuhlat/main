@@ -15,6 +15,7 @@ namespace client.Areas.Admin.Controllers
     
 
     [Area("Admin")]
+    [Authorize(Policy = "AdminOnly")]
     public class EventsController : Controller
     {
         private readonly AzureBlobStorageService _blobStorage;
