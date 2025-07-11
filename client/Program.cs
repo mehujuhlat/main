@@ -12,13 +12,12 @@ builder.Configuration.AddAzureKeyVault(
     new DefaultAzureCredential());
 
 AppSecrets.Initialize(builder.Configuration);
+var dbConnectionString = builder.Configuration["dbconnection"];
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHostedService<CleanupUserService>();
 builder.Services.AddDbContext<MehujuhlatContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseSqlServer(dbConnectionString));
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<AzureBlobStorageService>();
 builder.Services.AddSignalR();

@@ -15,6 +15,7 @@ namespace client.Areas.Admin.Controllers
     
 
     [Area("Admin")]
+    [Authorize(Policy = "AdminOnly")]
     public class EventsController : Controller
     {
         private readonly AzureBlobStorageService _blobStorage;
@@ -33,6 +34,7 @@ namespace client.Areas.Admin.Controllers
         }
 
         // GET: Admin/Events/Details/5
+        /*
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -48,7 +50,7 @@ namespace client.Areas.Admin.Controllers
             }
 
             return View(@event);
-        }
+        }*/
 
         // GET: Admin/Events/Create
         public IActionResult Create()

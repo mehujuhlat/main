@@ -1,6 +1,12 @@
 ﻿@using client.Models;
-@model Message  
+@model Message; 
 
+@{ 
+bool admin = false;
+if (User.Identity.IsAuthenticated) {
+    admin = User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
+}
+}
 <li>
     @Html.DisplayFor(model => model.Date)
     &lt; @Html.DisplayFor(model => model.Sender.Nickname) &gt;
@@ -15,7 +21,7 @@
         @Html.DisplayFor(model => model.Message1)
     }
 
-    @if (Model.SenderId == ViewBag.CurrentUserId)
+    @if (Model.SenderId == ViewBag.CurrentUserId || admin)
     {
         <a href="@Url.Action("Delete", new { id = Model.MessageId })" title="Poista viesti">[x]</a>
     }

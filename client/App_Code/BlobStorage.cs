@@ -12,8 +12,9 @@ namespace client.App_Code
 
         public AzureBlobStorageService(IConfiguration config)
         {
-            var rawConnection = config["AzureStorage:ConnectionString"];
-            _connectionString = rawConnection.Replace("**blobkey**", config["blobkey"]);
+            _connectionString = config["blobconnection"];
+            //var rawConnection = config["AzureStorage:ConnectionString"];
+            //_connectionString = rawConnection.Replace("**blobkey**", config["blobkey"]);
             _containerName = config["AzureStorage:ContainerName"];
         }
         //Guid.NewGuid()
@@ -74,7 +75,6 @@ namespace client.App_Code
             try
             {
                 var uri = new Uri(blobUrl);
-                // Erotellaan koko polku
                 var fullPath = uri.AbsolutePath.TrimStart('/');
                 var blobName = fullPath.Substring(fullPath.IndexOf('/') + 1);
                 return blobName;

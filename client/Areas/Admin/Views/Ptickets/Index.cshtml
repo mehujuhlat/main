@@ -1,0 +1,75 @@
+﻿@model client.Areas.Admin.Controllers.PTicketsEventsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Admin / Purchased Tickets</h1>
+
+<ul>
+    @foreach (var item in Model.AllEvents)
+    {
+        <li><a asp-action="Index" asp-route-id="@item.EventId">@item.Name</a></li>
+    }
+</ul>
+
+
+<h4>@ViewData["EventName"]</h4>
+
+@if ( Model.PTickets.Count() > 0)
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Ticket</th>
+            <th>Price</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Valid</th>
+            <th>Buyer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.PTickets) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ticket.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price) €
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Valid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Nickname)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PticketId">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@item.PticketId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+    </table>
+} else
+{
+    <div>Valitse tapahtuma</div>
+}
+@if (Convert.ToDecimal(ViewData["TotalSum"]) > 0)
+{
+    <div> Lipputulot yhteensä : <strong>@ViewData["TotalSum"] €</strong> </div>
+    <div> Ostettuja lippuja yhteensä : <strong>@ViewData["TotalTickets"]</strong></div>
+}

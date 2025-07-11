@@ -33,9 +33,6 @@ public partial class MehujuhlatContext : DbContext
     //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     //    => optionsBuilder.UseSqlServer("Server=DESKTOP-BA80A56\\SQLEXPRESS;Database=Mehujuhlat;Trusted_Connection=True;user id=sa;password=testi;trustservercertificate=True;");
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    => optionsBuilder.UseSqlServer("Server=mehujuhlat.database.windows.net;Database=mehujuhlatdb;Trusted_Connection=False;user id=mehujuhlatadmin;password="+AppSecrets.DbPassword+";trustservercertificate=True;");
-
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
