@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Threading.Tasks;
 
 namespace client.Areas.Admin.Controllers
@@ -131,11 +133,30 @@ namespace client.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PticketId,UserId,TicketId,Price,Date,Firstname,Lastname,Address,Postalcode,City,Code,Valid")] Pticket pticket)
+        public async Task<IActionResult> Edit(int id, [Bind("PticketId,UserId,TicketId,Price,Date,Firstname,Lastname,Address,Postalcode,City,Code,Valid,Cancel")] Pticket pticket)
         {
+
             if (id != pticket.PticketId)
             {
                 return NotFound();
+            }
+
+            ModelState.Remove("User");
+            ModelState.Remove("Ticket");
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var entry in ModelState)
+                {
+                    if (entry.Value.Errors.Count > 0)
+                    {
+                        Debug.WriteLine($"Virhe kentässä '{entry.Key}':");
+                        foreach (var error in entry.Value.Errors)
+                        {
+                            Debug.WriteLine($"- {error.ErrorMessage}");
+                        }
+                    }
+                }
             }
 
             if (ModelState.IsValid)
@@ -156,7 +177,8 @@ namespace client.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                var tick = await _context.Ptickets.Include(t => t.Ticket).FirstOrDefaultAsync(m => m.TicketId == pticket.TicketId);
+                return RedirectToAction(nameof(Index), new { id = tick.Ticket.EventId });
             }
             ViewData["TicketId"] = new SelectList(_context.Tickets, "TicketId", "TicketId", pticket.TicketId);
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", pticket.UserId);

@@ -29,6 +29,8 @@ public partial class Pticket
 
     public bool? Valid { get; set; }
 
+    public bool? Cancel { get; set; }
+
     public virtual Ticket Ticket { get; set; } = null!;
 
     public virtual User User { get; set; } = null!;

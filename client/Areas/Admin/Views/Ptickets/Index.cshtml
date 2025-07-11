@@ -33,7 +33,8 @@
     </thead>
     <tbody>
 @foreach (var item in Model.PTickets) {
-        <tr>
+        
+      <tr style="@(item.Cancel == true ? "background-color: yellow;" : "")">
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
