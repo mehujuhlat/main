@@ -54,6 +54,7 @@ namespace client.Areas.Admin.Controllers
             }
             if (sum != null)
                 ViewData["TotalSum"] = sum;
+            ViewData["id"] = id;
             ViewData["TotalTickets"] = ticketCount;
 
             return View(viewModel);

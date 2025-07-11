@@ -16,7 +16,7 @@
 
 <h4>@ViewData["EventName"]</h4>
 
-@if ( Model.PTickets.Count() > 0)
+@if ( Convert.ToInt32(ViewData["id"]) > 0)
 {
 <table class="table">
     <thead>
