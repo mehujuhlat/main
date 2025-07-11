@@ -19,7 +19,9 @@
         <li>Firstname: @Html.DisplayFor(modelItem => item.Firstname)</li>
         <li>Lastname: @Html.DisplayFor(modelItem => item.Lastname)</li>
         <li>Price: @Html.DisplayFor(modelItem => item.Price)</li>
-        <li>Ticket: <span style="@(item.Cancel == true ? "text-decoration: line-through;" : "")">@Html.DisplayFor(modelItem => item.Ticket.Description)</span><a asp-action="Cancel" asp-route-id="@item.PticketId"> [Peru osto]</a></li>
+        <li>Ticket: <span style="@(item.Cancel == true ? "text-decoration: line-through;" : "")">@Html.DisplayFor(modelItem => item.Ticket.Description)</span>
+            @if ( item.Cancel==false ) {<a asp-action="Cancel" asp-route-id="@item.PticketId"> [Peru osto]</a> }
+        </li>
     </ul>
     <img src="@Url.Action("GenQR", "Api", new { id = item.Code })" alt="QR-koodi" class="qr-code" />
 }
