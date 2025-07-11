@@ -1,0 +1,73 @@
+﻿@model client.Areas.Admin.Controllers.TicketsEventsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Admin / Tickets</h1>
+
+<ul>
+    @foreach (var item in Model.AllEvents)
+    {
+        <li><a asp-action="Index" asp-route-id="@item.EventId">@item.Name</a></li>
+    }
+</ul>
+
+<h4>@ViewData["EventName"]</h4>
+
+@if ( ViewBag.Event > 0 )
+{
+<p>
+    <a asp-action="Create" asp-route-id="@ViewBag.Event">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Desc
+            </th>
+            <th>
+               Type
+            </th>
+            <th>
+               Hinta
+            </th>
+            <th>
+               Days
+            </th>
+            <th>
+               Valid
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Tickets) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Day)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Valid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TicketId">Edit</a> | <a asp-action="Delete" asp-route-id="@item.TicketId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+    </table>
+
+} else
+{
+    <div>Valitse tapahtuma</div>
+}

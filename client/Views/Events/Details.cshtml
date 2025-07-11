@@ -55,7 +55,10 @@
                 @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
                 {
                     <dd class="col-sm-10">
-                    <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.EventId">Muokkaa</a>
+                    <a asp-action="Edit" asp-area="Admin" asp-route-id="@Model.EventId">Muokkaa tapahtumaa</a>
+                    </dd>
+                    <dd class="col-sm-10">
+                        <a href="/Admin/Tickets/Index/@Model.EventId">Muokkaa/Luo lippuja</a>
                     </dd>
                 }
             } else
