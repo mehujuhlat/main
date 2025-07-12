@@ -18,7 +18,7 @@ document.getElementById("sendButton").addEventListener("click", function () {
 });
 
 // Vastaanota viesti
-connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName, messageId, message, date, owner, private) => {
+connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName, messageId, message, date, owner, isPrivate) => {
     const li = document.createElement("li");
 
     li.textContent = `${date} < ${senderName} > ${receiverName} : ${message}`;
@@ -26,11 +26,79 @@ connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName,
     if (owner)
         li.innerHTML += `<a href="/MyMessages/Delete/${messageId}">[x]</a>`;
 
-    if (private)
-        document.getElementById("messagesPrivateList").appendChild(li);
-    else 
-        document.getElementById("messagesList").appendChild(li);
+    let container, list;
+    if (isPrivate) {
+        list = document.getElementById("messagesPrivateList");
+        container = document.getElementById("privateMessagesContainer");
+    } else {
+        list = document.getElementById("messagesList");
+        container = document.getElementById("globalMessagesContainer");
+    }
+    list.appendChild(li);
+
+    const scrollThreshold = 50; 
+    const isNearBottom = container.scrollHeight - container.clientHeight - container.scrollTop <= scrollThreshold;
+
+    if (isNearBottom) {
+        container.scrollTop = container.scrollHeight;
+    }
 });
+
+//AI koodia
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleButtons = document.querySelectorAll('.toggle-chat');
+
+    toggleButtons.forEach(button => {
+        const targetId = button.getAttribute('data-target');
+        const container = document.getElementById(targetId);
+
+        if (container.classList.contains('hidden')) {
+            button.textContent = '[Näytä]';
+        } else {
+            button.textContent = '[Piilota]';
+        }
+
+        button.addEventListener('click', function () {
+            container.classList.toggle('hidden');
+
+            if (container.classList.contains('hidden')) {
+                button.textContent = '[Näytä]';
+            } else {
+                button.textContent = '[Piilota]';
+                container.scrollTop = container.scrollHeight;
+            }
+        });
+    });
+    scrollContainersToBottom();
+});
+
+function scrollContainersToBottom() {
+    const privateContainer = document.getElementById('privateMessagesContainer');
+    const globalContainer = document.getElementById('globalMessagesContainer');
+
+    if (privateContainer && !privateContainer.classList.contains('hidden')) {
+        privateContainer.scrollTop = privateContainer.scrollHeight;
+    }
+
+    if (globalContainer && !globalContainer.classList.contains('hidden')) {
+        globalContainer.scrollTop = globalContainer.scrollHeight;
+    }
+}
+
+
+
+
+
+
+
+/*
+document.addEventListener('DOMContentLoaded', function () {
+    const privateContainer = document.getElementById('privateMessagesContainer');
+    const globalContainer = document.getElementById('globalMessagesContainer');
+
+    privateContainer.scrollTop = privateContainer.scrollHeight;
+    globalContainer.scrollTop = globalContainer.scrollHeight;
+});*/
 
 /*
 connection.on("ReceivePrivateMessage", (senderId, senderName, receiverId, receiverName, messageId, message, date, owner) => {

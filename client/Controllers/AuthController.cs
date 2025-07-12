@@ -83,12 +83,12 @@ namespace client.Controllers
                         
                         return RedirectToAction("Index", "Home");
                     }
-                    ViewBag.LoginMessage = "Hash: Väärä käyttäjänimi ja salasana";
+                    ViewBag.LoginMessage = "Väärä salasana";
                     return View();
                 }
                 else
                 {
-                    ViewBag.LoginMessage = "Väärä käyttäjänimi ja salasana"; ;
+                    ViewBag.LoginMessage = "Väärä sähköpostiosoite"; ;
                     return View();
                 }
             }

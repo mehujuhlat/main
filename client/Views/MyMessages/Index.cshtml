@@ -14,58 +14,65 @@
 
 <h2>MyMessages</h2>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
-<div class="row">
-    <div class="col-md-4">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="NewMessage.Message1" class="control-label"></label>
-            <input id="messageInput" name="Message1" class="form-control" />
-                <span asp-validation-for="NewMessage.Message1" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label  asp-for="NewMessage.ReceiverId" class="control-label"></label>
-            <select id="receiverId" name="ReceiverId" class="form-control" asp-items="ViewBag.ReceiverId"></select>
-            </div>
-            <div class="form-group form-check">
-                <input id="PrivateInput" type="checkbox" class="form-check-input" asp-for="NewMessage.Private" />
-                <label class="form-check-label">Yksityinen viesti</label>
-            </div>
-            <div class="form-group">
-            <input id="sendButton" value="SendMessage" class="btn btn-primary" />
-            </div>
-    </div>
-</div>
-<script src="/js/msg.js"></script>
 
 @{
     ViewData["CurrentUserId"] = id; 
 }
 
 <h3>Private</h3>
+<div class="toggle-chat" data-target="privateMessagesContainer">[Piilota]</div>
+<div class="message-container" id="privateMessagesContainer">
 <ul id="messagesPrivateList">
     @foreach (var item in Model.PrivateMessages)
     {
         @await Html.PartialAsync("_MessageItem", item)
     }
 </ul>
+</div>
 
 <h3>Global</h3>
+<div class="toggle-chat" data-target="globalMessagesContainer">[Piilota]</div>
+<div class="message-container" id="globalMessagesContainer">
 <ul id="messagesList">
     @foreach (var item in Model.Messages)
     {
         @await Html.PartialAsync("_MessageItem", item)
     }
 </ul>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="NewMessage.Message1" class="control-label"></label>
+            <input id="messageInput" name="Message1" class="form-control" />
+            <span asp-validation-for="NewMessage.Message1" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NewMessage.ReceiverId" class="control-label"></label>
+            <select id="receiverId" name="ReceiverId" class="form-control" asp-items="ViewBag.ReceiverId"></select>
+        </div>
+        <div class="form-group form-check">
+            <input id="PrivateInput" type="checkbox" class="form-check-input" asp-for="NewMessage.Private" />
+            <label class="form-check-label">Yksityinen viesti</label>
+        </div>
+        <div class="form-group">
+            <input id="sendButton" value="SendMessage" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+<script src="/js/msg.js"></script>
+
 
 
 @{
         MessageService.MarkMessagesAsRead(id);      
 }
    
-
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
