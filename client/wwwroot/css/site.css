@@ -54,3 +54,11 @@ body {
         color: darkblue;
 }
 
+
+.message-user-link {
+    color: #000000;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+

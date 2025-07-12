@@ -1,16 +1,40 @@
 ﻿@using client.Models;
+@using System.Security.Claims
 @model Message; 
+
 
 @{ 
 bool admin = false;
 if (User.Identity.IsAuthenticated) {
     admin = User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True");
 }
+ int id = -1;
+ Int32.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out id);
+
 }
 <li>
     @Html.DisplayFor(model => model.Date)
-    &lt; @Html.DisplayFor(model => model.Sender.Nickname) &gt;
-    @Html.DisplayFor(model => model.Receiver.Nickname) :
+    
+    &lt;
+    @if (Model.SenderId != id)
+    {
+        <a class="message-user-link" onclick="setReceiver(@Html.DisplayFor(model => model.SenderId))">@Html.DisplayFor(model => model.Sender.Nickname)</a> 
+    } 
+    else 
+    {
+        @Html.DisplayFor(model => model.Sender.Nickname)
+	}
+    &gt;
+    
+    @if ( Model.ReceiverId != id )
+    {
+        <a class="message-user-link" onclick="setReceiver(@Html.DisplayFor(model => model.ReceiverId))">@Html.DisplayFor(model => model.Receiver.Nickname)</a>
+    } 
+    else
+    {
+        @Html.DisplayFor(model => model.Receiver.Nickname)
+    }
+    :
     
     @if (Model.NewMsg && Model.ReceiverId == ViewBag.CurrentUserId)
     {

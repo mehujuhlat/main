@@ -17,11 +17,25 @@ document.getElementById("sendButton").addEventListener("click", function () {
         .catch(err => console.error(err));
 });
 
+window.setReceiver = function setReceiver(id) {
+    document.getElementById("receiverId").value = id;
+    document.getElementById("messageInput").focus();
+    document.getElementById("PrivateInput").checked = true;
+}
+
 // Vastaanota viesti
 connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName, messageId, message, date, owner, isPrivate) => {
     const li = document.createElement("li");
 
-    li.textContent = `${date} < ${senderName} > ${receiverName} : ${message}`;
+    li.innerHTML = `${date} &lt `;
+
+    if ( owner ) 
+        li.innerHTML += `${senderName} &gt`;
+    else
+        li.innerHTML += `<a class="message-user-link" onclick = "setReceiver(${senderId})" > ${senderName}</a> &gt`;
+
+    li.innerHTML += `<a class="message-user-link" onclick = "setReceiver(${receiverId})" > ${receiverName}</a> : ${message} `;
+    //li.textContent+= ` ${message} `;
 
     if (owner)
         li.innerHTML += `<a href="/MyMessages/Delete/${messageId}">[x]</a>`;
