@@ -1,5 +1,6 @@
 ﻿using client.Models;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ namespace client.Areas.Admin.Controllers
     }
 
     [Area("Admin")]
+    [Authorize(Policy = "AdminOnly")]
     public class TicketsController : Controller
     {
         private readonly MehujuhlatContext _context;

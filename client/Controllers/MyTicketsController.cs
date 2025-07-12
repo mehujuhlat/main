@@ -122,6 +122,7 @@ namespace client.Controllers
                 pticket.Date = DateTime.Now;
                 pticket.Code = Helper.GenerateRandomString(10);
                 pticket.Valid = true;
+                pticket.Cancel = false;
                 _context.Add(pticket);
 
                 User u = await _context.Users.FindAsync(idx);
@@ -158,6 +159,31 @@ namespace client.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", pticket.UserId);
             return View(pticket);
         }
+
+        public async Task<IActionResult> Cancel(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pticket = await _context.Ptickets.FindAsync(id);
+            if (pticket == null)
+            {
+                return NotFound();
+            }
+
+            pticket.Cancel = true;
+            pticket.Valid = false;
+            await _context.SaveChangesAsync();
+
+            ViewData["TicketId"] = new SelectList(_context.Tickets, "TicketId", "TicketId", pticket.TicketId);
+            ViewData["UserId"] = new SelectList(_context.Users, "UserId", "UserId", pticket.UserId);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
         // POST: MyTickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
