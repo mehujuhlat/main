@@ -27,19 +27,29 @@ window.setReceiver = function setReceiver(id) {
 connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName, messageId, message, date, owner, isPrivate) => {
     const li = document.createElement("li");
 
-    li.innerHTML = `${date} &lt `;
+    const safeDate = escapeHtml(date);
+    const safeSenderName = escapeHtml(senderName);
+    const safeReceiverName = escapeHtml(receiverName);
+    const safeMessage = escapeHtml(message);
 
-    if ( owner ) 
-        li.innerHTML += `${senderName} &gt`;
-    else
-        li.innerHTML += `<a class="message-user-link" onclick = "setReceiver(${senderId})" > ${senderName}</a> &gt`;
+    li.innerHTML = `${safeDate} &lt; `;
 
-    li.innerHTML += `<a class="message-user-link" onclick = "setReceiver(${receiverId})" > ${receiverName}</a> : ${message} `;
-    //li.textContent+= ` ${message} `;
+    // Lisää lähettäjä linkkinä tai tekstinä
+    if (owner) {
+        li.innerHTML += `${safeSenderName} &gt;`;
+    } else {
+        li.innerHTML += `<a class="message-user-link" onclick="setReceiver(${escapeHtml(senderId.toString())}">${safeSenderName}</a> &gt;`;
+    }
 
-    if (owner)
-        li.innerHTML += `<a href="/MyMessages/Delete/${messageId}">[x]</a>`;
+    // Lisää vastaanottaja linkkinä
+    li.innerHTML += `<a class="message-user-link" onclick="setReceiver(${escapeHtml(receiverId.toString())}">${safeReceiverName}</a> : ${safeMessage}`;
 
+    // Lisää poistolinkki omistajalle
+    if (owner) {
+        li.innerHTML += ` <a href="/MyMessages/Delete/${escapeHtml(messageId.toString())}">[x]</a>`;
+    }
+
+    // Lisää viesti oikeaan listaan
     let container, list;
     if (isPrivate) {
         list = document.getElementById("messagesPrivateList");
@@ -50,13 +60,23 @@ connection.on("ReceiveMessage", (senderId, senderName, receiverId, receiverName,
     }
     list.appendChild(li);
 
-    const scrollThreshold = 50; 
+    // Käsittele automaattiskrollaus
+    const scrollThreshold = 50;
     const isNearBottom = container.scrollHeight - container.clientHeight - container.scrollTop <= scrollThreshold;
-
     if (isNearBottom) {
         container.scrollTop = container.scrollHeight;
     }
 });
+
+function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe.toString()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
 //AI koodia
 document.addEventListener('DOMContentLoaded', function () {

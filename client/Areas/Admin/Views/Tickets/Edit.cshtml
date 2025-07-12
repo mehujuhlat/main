@@ -34,11 +34,28 @@
                 <input asp-for="Day" class="form-control" />
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Valid" class="control-label"></label>
-                <input asp-for="Valid" class="form-control" />
+                <div class="form-check">
+                    <input type="radio" asp-for="Valid" value="true" class="form-check-input" id="ValidTrue" />
+                    <label class="form-check-label" for="ValidTrue">Kyllä</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" asp-for="Valid" value="false" class="form-check-input" id="ValidFalse" />
+                    <label class="form-check-label" for="ValidFalse">Ei</label>
+                </div>
+                <!--
+                <div class="form-check">
+                    <input type="radio" asp-for="Valid" value="" class="form-check-input" id="ValidNull" />
+                    <label class="form-check-label" for="ValidNull">Ei valintaa</label>
+                </div>
+                -->
                 <span asp-validation-for="Valid" class="text-danger"></span>
             </div>
+
+
+    
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>

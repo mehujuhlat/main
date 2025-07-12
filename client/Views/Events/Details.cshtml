@@ -35,15 +35,33 @@
         </dd>
 
         <hr />
-        <dd class="col-sm-10">
-       
-        <ul>
-            @foreach (var item in Model.Tickets)
-            {
-               <li>@item.Description - @item.Price €</li>
-            }
-        </ul>
-        </dd>
+    
+        
+
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+
+                <tbody>
+                    @foreach (var item in Model.Tickets)
+                    {
+                        <tr>
+                            <td>@item.Description</td>
+                            <td class="text-right">@item.Price?.ToString("0.00") €</td>
+                            <td>
+                                <form asp-action="Buy" asp-controller="MyTickets" method="post">
+                                    <input type="hidden" name="eventId" value="@Model.EventId" />
+                                    <input type="hidden" name="ticketId" value="@item.TicketId" />
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Osta</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        
+
         @if ( active)
         {
             @if (User.Identity.IsAuthenticated)
