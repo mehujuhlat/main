@@ -66,8 +66,9 @@ namespace client.Controllers
         }
 
         // GET: MyTickets/Buy
-        public async Task<IActionResult> Buy(int? id)
+        public async Task<IActionResult> Buy(int? id, int TicketId)
         {
+            Debug.WriteLine("Buy called with id: " + id + " TicketId: " + TicketId);
             Event e = await _context.Events.FindAsync(id);
             ViewData["EventId"] = id;
             ViewData["EventName"] = e.Name;

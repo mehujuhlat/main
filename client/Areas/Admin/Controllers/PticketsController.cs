@@ -203,7 +203,7 @@ namespace client.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(pticket);
+           return View(pticket);
         }
 
         // POST: Admin/Ptickets/Delete/5
@@ -211,14 +211,20 @@ namespace client.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pticket = await _context.Ptickets.FindAsync(id);
+            var pticket = await _context.Ptickets
+                .Include(p => p.Ticket)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.PticketId == id);
+
             if (pticket != null)
             {
                 _context.Ptickets.Remove(pticket);
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), new { id = pticket.Ticket.EventId });
+            // return RedirectToAction(nameof(Index));
         }
 
         private bool PticketExists(int id)

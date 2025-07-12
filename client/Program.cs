@@ -61,6 +61,12 @@ app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
+
+    endpoints.MapControllerRoute(
+    name: "ticketPurchase",
+    pattern: "MyTickets/Buy/{Id}/{ticketId}",
+    defaults: new { controller = "MyTickets", action = "Buy" });
+
     endpoints.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
