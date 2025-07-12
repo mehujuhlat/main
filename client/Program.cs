@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
+// Add this using directive to resolve the 'AddRazorRuntimeCompilation' method
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddAzureKeyVault(
@@ -34,8 +37,6 @@ builder.Services.AddAuthorization(options =>
         policy.RequireAssertion(context =>
             context.User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True")));
 });
-;
-
 
 var app = builder.Build();
 
@@ -58,7 +59,6 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
@@ -67,13 +67,8 @@ app.UseEndpoints(endpoints =>
     );
 });
 
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
-
-
 
 app.Run();
