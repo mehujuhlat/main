@@ -119,6 +119,8 @@ namespace client.Areas.Admin.Controllers
                 return NotFound();
             }
 
+            // Tähän kohtaan ennen kuin poistetaan käyttäjä
+
             var user = await _context.Users
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (user == null)
@@ -131,12 +133,18 @@ namespace client.Areas.Admin.Controllers
 
         // POST: Admin/Users/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]  
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
+                var messagesWithReceiver = await _context.Messages.Where(m => m.ReceiverId == id).ToListAsync();
+                foreach (var message in messagesWithReceiver)
+                {
+                    message.ReceiverId = null;
+                    message.Receiver = null; 
+                }
                 _context.Users.Remove(user);
             }
 

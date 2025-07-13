@@ -3,5 +3,5 @@
 @{
     ViewData["Title"] = "Validation";
 }
-<h2>Validation</h2>
-Olemme lähettäneet sähköpostiin @Model.Email viestiin linkin jolla vahvistat rekisteröintisi.
+<h2>Vahvistaminen</h2>
+Olemme lähettäneet sähköpostiin @Html.DisplayFor(model => model.Email) linkin jolla vahvistat rekisteröintisi.
