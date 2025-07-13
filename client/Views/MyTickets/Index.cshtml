@@ -12,20 +12,95 @@
 </ul>
 
 <h2>MyTickets</h2>
-@foreach (var item in Model.UserTickets)
-{
-    <h4 style="@(item.Cancel == true ? "text-decoration: line-through;" : "")"> @Html.DisplayFor(modelItem => item.Ticket.Event.Name)</h4>
-    <ul>
-        <li>Firstname: @Html.DisplayFor(modelItem => item.Firstname)</li>
-        <li>Lastname: @Html.DisplayFor(modelItem => item.Lastname)</li>
-        <li>Price: @Html.DisplayFor(modelItem => item.Price)</li>
-        <li>Ticket: <span style="@(item.Cancel == true ? "text-decoration: line-through;" : "")">@Html.DisplayFor(modelItem => item.Ticket.Description)</span>
-            @if ( item.Cancel==false ) {<a asp-action="Cancel" asp-route-id="@item.PticketId"> [Peru osto]</a> }
-        </li>
-    </ul>
-    <img src="@Url.Action("GenQR", "Api", new { id = item.Code })" alt="QR-koodi" class="qr-code" />
-}
 
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var item in Model.UserTickets)
+    {
+        <div class="col">
+            <div class="card h-100 @(item.Cancel.Value ? "border-danger" : "border-dark") shadow-sm">
+                <div class="card-header @(item.Cancel.Value ? "bg-danger text-white" : "bg-dark text-white")">
+                    <h5 class="card-title mb-0 @(item.Cancel.Value ? "text-decoration-line-through" : "")">
+                        <i class="fas fa-ticket-alt me-2"></i>
+                        @Html.DisplayFor(modelItem => item.Ticket.Event.Name)
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-column h-100">
+                        <div class="mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-user me-2 text-muted"></i>
+                                <span class="fw-bold me-2">Nimi:</span>
+                                <span>@Html.DisplayFor(modelItem => item.Firstname) @Html.DisplayFor(modelItem => item.Lastname)</span>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-tag me-2 text-muted"></i>
+                                <span class="fw-bold me-2">Lippu:</span>
+                                <span class="@(item.Cancel.Value ? "text-decoration-line-through" : "")">
+                                    @Html.DisplayFor(modelItem => item.Ticket.Description)
+                                </span>
+                            </div>
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="fas fa-euro-sign me-2 text-muted"></i>
+                                <span class="fw-bold me-2">Hinta:</span>
+                                <span>@Html.DisplayFor(modelItem => item.Price) €</span>
+                            </div>
+                        </div>
 
+                        <div class="mt-auto text-center">
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#qrModal-@item.PticketId">
+                                <img src="@Url.Action("GenQR", "Api", new { id = item.Code })"
+                                     alt="QR-koodi"
+                                     class="img-fluid qr-code mb-3">
+                            </a>
+                            <p class="small text-muted mb-0">Klikkaa QR-koodia suurentaaksesi</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    @if (!item.Cancel.Value)
+                    {
+                        <a asp-action="Cancel" asp-route-id="@item.PticketId"
+                           class="btn btn-outline-danger btn-sm w-100">
+                            <i class="fas fa-times-circle me-1"></i> Peru osto
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="badge bg-danger w-100 py-2">
+                            <i class="fas fa-ban me-1"></i> Peruutettu
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
 
-
+        <div class="modal fade" id="qrModal-@item.PticketId" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fas fa-qrcode me-2"></i>
+                            @item.Ticket.Event.Name - QR-koodi
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="@Url.Action("GenQR", "Api", new { id = item.Code })"
+                             alt="QR-koodi"
+                             class="img-fluid qr-modal-image">
+                        <div class="mt-3">
+                            <p class="mb-1"><strong>Lippu:</strong> @item.Ticket.Description</p>
+                            <p class="mb-1"><strong>Omistaja:</strong> @item.Firstname @item.Lastname</p>
+                            <p class="mb-0"><strong>Hinta:</strong> @item.Price.Value.ToString("0.00") €</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times me-1"></i> Sulje
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

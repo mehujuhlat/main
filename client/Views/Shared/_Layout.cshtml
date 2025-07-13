@@ -24,6 +24,12 @@
     <link rel="stylesheet" href="~/css/mytickets.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/client.styles.css" asp-append-version="true" />
 </head>
+<script>
+    // Tarkista mobiililaitteet
+    window.IsMobileBrowser = function() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    };
+</script>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">

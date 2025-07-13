@@ -1,23 +1,39 @@
-﻿.qr - code {
-transition: transform 0.3s ease;
-border: 1px solid #dee2e6;
-    padding: 5px;
-background: white;
+﻿/* QR-koodin perustyylit */
+.qr-code {
+    transition: all 0.3s ease;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 8px;
+    background: white;
+    max-width: 150px;
+    cursor: zoom-in;
 }
 
-.qr - code:hover {
-    transform: scale(1.05);
+    .qr-code:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        border-color: #0d6efd;
+    }
+
+/* Modaalin QR-koodin koon hallinta */
+.qr-modal-image {
+    max-width: 500px; /* Maksimileveys */
+    width: 100%; /* Sopeutuu pienempiin näyttöihin */
+    height: auto;
+    max-height: 70vh; /* Estää liian korkean kuvan */
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
 }
 
-.card {
-    transition: box - shadow 0.3s ease;
-box - shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+/* Pienemmillä näytöillä */
+@media (max-width: 768px) {
+    .qr-modal-image {
+        max-width: 100%; /* Täyttää koko näytön leveyden */
+        padding: 0 15px; /* Lisää hieman tilaa reunoille */
+    }
 
-.card: hover {
-    box - shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.list - group - item {
-padding: 0.75rem 1.25rem;
+    .modal-dialog {
+        margin: 0.5rem auto; /* Pienempi marginaali */
+    }
 }
