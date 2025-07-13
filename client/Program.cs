@@ -3,9 +3,6 @@ using client.App_Code;
 using client.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics;
-
-// Add this using directive to resolve the 'AddRazorRuntimeCompilation' method
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +36,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 var app = builder.Build();
+Helper.Initialize(app.Environment);
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

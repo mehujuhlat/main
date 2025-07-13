@@ -22,8 +22,16 @@ namespace client.App_Code
 
     public static class Helper
     {
-        public static string appUrl = "https://localhost:7137";
+            private static IWebHostEnvironment _env;
 
+            public static void Initialize(IWebHostEnvironment env)
+            {
+            _env = env;
+            }
+
+        public static string appUrl => _env.IsDevelopment() ? "https://localhost:7137" : "https://mehujuhlat.azurewebsites.net";
+
+       
         /*
         public static string GetSecret(string secretName)
         {

@@ -20,6 +20,12 @@ using System.Web;
 
 namespace client.Controllers
 {
+    public class RecoverUser
+    {
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Id { get; set; }
+    }
 
     public class LoginUser
     {
@@ -69,7 +75,7 @@ namespace client.Controllers
                             Debug.WriteLine("ADMININA SISÄÄN");
                             Admin = true;
                         }
-                        
+
                         var claims = new List<Claim>
                          {
                            new Claim(ClaimTypes.GivenName, LoggedUser.Nickname),
@@ -77,10 +83,10 @@ namespace client.Controllers
                            new Claim(ClaimTypes.NameIdentifier, LoggedUser.UserId.ToString()),
                            new Claim("IsAdmin", Admin.ToString())
                          };
-                       
+
                         var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity));
-                        
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+
                         return RedirectToAction("Index", "Home");
                     }
                     ViewBag.LoginMessage = "Väärä salasana";
@@ -94,5 +100,63 @@ namespace client.Controllers
             }
             return View(loginUser);
         }
+
+        public IActionResult Recover()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Recover([Bind("Email")] RecoverUser recoverUser)
+        {
+
+            string recoverId = Helper.GenerateRandomString(10);
+            RecoverPassword.Store(recoverId, recoverUser, TimeSpan.FromHours(10));
+
+            string body = "";
+            body += "Seuraavasta linkistä voit luoda uuden salasanan Mehujuhliin. <br>";
+            body += "<a href=\"" + Helper.appUrl + "/Auth/NewPassword/" + recoverId + "\">" + Helper.appUrl + "/Auth/NewPassword/" + recoverId + "</a>";
+            Helper.sendMail(recoverUser.Email, "Luo uusi salasana Mehujuhliin", body);
+            return RedirectToAction("Login");
+        }
+
+
+        public IActionResult NewPassword(string id)
+        {
+            var recoverUser = RecoverPassword.get(id);
+            if (recoverUser == null)
+            {
+                return Forbid();
+            }
+            recoverUser.Id = id;
+            return View(recoverUser);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NewPassword([Bind("Id,Password")] RecoverUser recoverUser)
+        {
+            var ru = RecoverPassword.get(recoverUser.Id);
+            if (ru == null)
+            {
+                return Forbid();
+            }
+
+            var u = _context.Users.SingleOrDefault(x => x.Email == ru.Email);
+            if ( u != null)
+            {
+                u.Password = Psw.HashPassword(recoverUser.Password, u.Salt);
+                _context.Update(u);
+                await _context.SaveChangesAsync();
+                RecoverPassword.Remove(recoverUser.Id);
+                TempData["pswChange"] = "Salasana on vaihdettu onnistuneesti.";
+                return RedirectToAction("Login");
+            }
+
+            return View(nameof(Login));
+        }
+
     }
+
 }
