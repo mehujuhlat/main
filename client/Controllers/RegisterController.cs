@@ -79,10 +79,76 @@ namespace client.Controllers
                 string newId = Helper.GenerateRandomString(10);
                 NewUser.Store(newId, user, TimeSpan.FromHours(10));
 
-                string body = "";
-                body += "Vahvista rekisteröitymisesi Mehujuhliin linkistä <br>";
-                body += "<a href=\""+Helper.appUrl+"/Register/Confirm/"+newId+"\">"+Helper.appUrl+"/Register/Confirm/"+newId+"</a>";
-                Helper.sendMail(user.Email, "Tervetuloa mehujuhliin "+user.Nickname, body);
+                //string body = "";
+                //body += "Vahvista rekisteröitymisesi Mehujuhliin linkistä <br>";
+                //body += "<a href=\""+Helper.appUrl+"/Register/Confirm/"+newId+"\">"+Helper.appUrl+"/Register/Confirm/"+newId+"</a>";
+                //Helper.sendMail(user.Email, "Tervetuloa mehujuhliin "+user.Nickname, body);
+
+                string body = $@"
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .header {{
+            background-color: #f8d7da;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }}
+        .button {{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+        }}
+        .footer {{
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #6c757d;
+            text-align: center;
+        }}
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <h1>Tervetuloa mehujuhliin, {user.Nickname ?? user.Firstname}!</h1>
+    </div>
+    
+    <p>Hei {user.Firstname} {user.Lastname},</p>
+    
+    <p>Kiitos rekisteröitymisestäsi Mehujuhliimme! Vahvista vielä sähköpostiosoitteesi alla olevasta painikkeesta:</p>
+    
+    <div style='text-align: center;'>
+        <a href='{Helper.appUrl}/Register/Confirm/{newId}' class='button'>Vahvista rekisteröityminen</a>
+    </div>
+    
+    <p>Jos painike ei toimi, kopioi seuraava osoite selaimeesi:</p>
+    <p><a href='{Helper.appUrl}/Register/Confirm/{newId}'>{Helper.appUrl}/Register/Confirm/{newId}</a></p>
+    
+    <div class='footer'>
+        <p>Tämä on automaattinen viesti, älä vastaa tähän viestiin.</p>
+        <p>© {DateTime.Now.Year} Mehujuhlat</p>
+    </div>
+</body>
+</html>";
+
+                Helper.sendMail(user.Email, $"Tervetuloa mehujuhliin {user.Nickname ?? user.Firstname}", body);
+
+
+
+
                 ViewBag.newId = newId;
                 return View("Validation", user);
             }

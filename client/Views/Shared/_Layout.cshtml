@@ -11,7 +11,7 @@
             unreadCount = MessageService.GetUnreadMessageCount(id);
         }
     }
-} 
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +73,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="MyTickets" asp-action="Index">MyTickets</a>
                             </li>
 
-                            
+
 
                             @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
                             {
@@ -95,7 +95,7 @@
                             </li>
                             // @User.FindFirst(ClaimTypes.NameIdentifier)?.Value -
                             <li class="nav-item">
-                                ( @User.Identity.Name - @User.FindFirst(ClaimTypes.GivenName)?.Value  )
+                                ( @User.Identity.Name  )
                             </li>
 
                         }

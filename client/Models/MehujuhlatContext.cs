@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using client.App_Code;
 using Microsoft.EntityFrameworkCore;
 
 namespace client.Models;
 
 public partial class MehujuhlatContext : DbContext
 {
-  
     public MehujuhlatContext()
     {
-        
     }
 
     public MehujuhlatContext(DbContextOptions<MehujuhlatContext> options)
@@ -30,10 +27,10 @@ public partial class MehujuhlatContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    //    => optionsBuilder.UseSqlServer("Server=DESKTOP-BA80A56\\SQLEXPRESS;Database=Mehujuhlat;Trusted_Connection=True;user id=sa;password=testi;trustservercertificate=True;");
+  //  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+ //       => optionsBuilder.UseSqlServer("REMOVED");
 
-    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Event>(entity =>
@@ -55,7 +52,7 @@ public partial class MehujuhlatContext : DbContext
             entity.HasOne(d => d.Event).WithMany(p => p.Images)
                 .HasForeignKey(d => d.EventId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Images__EventID__503BEA1C");
+                .HasConstraintName("FK__Images__EventID__68487DD7");
         });
 
         modelBuilder.Entity<Message>(entity =>
@@ -100,8 +97,8 @@ public partial class MehujuhlatContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.Ptickets)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__PTickets__UserID__1F98B2C1");
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_PTickets_Users");
         });
 
         modelBuilder.Entity<Ticket>(entity =>
@@ -113,14 +110,14 @@ public partial class MehujuhlatContext : DbContext
             entity.HasOne(d => d.Event).WithMany(p => p.Tickets)
                 .HasForeignKey(d => d.EventId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Tickets__EventID__31B762FC");
+                .HasConstraintName("FK__Tickets__EventID__6D0D32F4");
         });
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D105341736F111").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534EAC5449F").IsUnique();
 
-            entity.HasIndex(e => e.Nickname, "UQ__Users__CC6CD17E49EE83DB").IsUnique();
+            entity.HasIndex(e => e.Nickname, "UQ__Users__CC6CD17E49730609").IsUnique();
 
             entity.Property(e => e.UserId).HasColumnName("UserID");
             entity.Property(e => e.Email).HasMaxLength(50);
