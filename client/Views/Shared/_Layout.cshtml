@@ -14,113 +14,307 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fi">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>@ViewData["Title"] - Mehujuhlat</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/mytickets.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/client.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka+One&display=swap">
+    <style>
+        :root {
+            --neon-pink: #ff3fa4;
+            --electric-blue: #00f5ff;
+            --lime-green: #b2ff59;
+            --vibrant-purple: #b04cff;
+            --confetti-yellow: #ffde59;
+        }
+
+        /* FLEXBOX LAYOUT - FOOTER ALAHAALLA */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            font-family: 'Fredoka One', sans-serif;
+            background-color: #ffe7c2;
+            margin: 0;
+            background-image: url('/images/keltataustat.png');
+            overflow-x: ;
+        }
+
+        main {
+            flex: 1;
+            padding-top: 0;
+            padding-left: 4rem;
+            padding-right: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        /* NAVBAR (3D-EFFECT) */
+        .navbar {
+            background: #ffe7c2;
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            font-family: 'Chewy', cursive;
+            font-size: 2.5rem;
+            color: white !important;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+            transform: skewY(1deg);
+            letter-spacing: 1px;
+        }
+
+        /* FOOTER (GLOWING EFFECT) */
+        footer {
+            margin-top: auto;
+            background: #ffe7c2;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+
+        }
+
+            footer::before {
+                content: "";
+                position: absolute;
+                top: -10px;
+                left: 0;
+                right: 0;
+                height: 10px;
+                background: linear-gradient(90deg, transparent, var(--confetti-yellow), transparent);
+            }
+
+        /* NAV-LINKIT (HOVER-ANIMAATIO) */
+        .nav-link {
+            color: white !important;
+            font-weight:normal;
+            margin: 0 5px;
+            padding: 10px 20px !important;
+            border-radius: 50px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            transform: skewY(1deg);
+            text-shadow: 1px 1px 3px #ff3131;
+        }
+
+            .nav-link:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-3px) skewY(1deg);
+                box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+            }
+
+            .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: 0;
+                height: 3px;
+                background: var(--confetti-yellow);
+                transition: all 0.3s;
+            }
+
+            .nav-link:hover::after {
+                width: 80%;
+                left: 10%;
+            }
+
+        /* UNREAD BADGE (BOUNCE EFFECT) */
+        .unread-badge {
+            background-color: var(--confetti-yellow);
+            color: #333;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 0.9rem;
+            margin-left: 5px;
+            display: inline-block;
+            animation: bounce 1s infinite alternate;
+        }
+
+        /* USER GREETING (NEON GLOW) */
+        .user-greeting {
+            background-color: #ff3131;
+            border-radius: 50px;
+            padding: 5px 15px;
+            color: #fcfdf2;
+            font-weight: normal;
+            box-shadow: 0 0 10px;
+        }
+
+        /* DROPDOWN MENU (GLASS MORPHISM) */
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .dropdown-item {
+            color: var(--vibrant-purple) !important;
+            font-weight: normal;
+        }
+
+            .dropdown-item:hover {
+                background: rgba(176, 76, 255, 0.1);
+            }
+
+        /* MAIN CONTENT (FLOATING CARD) */
+        .main-content {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 0;
+            margin: 4rem auto, 0;
+            max-width: 1200px;
+            border: 0;
+        }
+
+        .full-width-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        
+
+        /* ANIMAATIOT */
+        @@keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @@keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* MOBILE-FRIENDLY */
+        @@media (max-width: 768px) {
+            .navbar {
+                transform: none;
+            }
+
+            .navbar-brand, .nav-link {
+                transform: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mehujuhlat</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logopieni.png" alt="Logo" style="height:100px; margin-right: 10px;" />
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
 
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                            <a class="nav-link" asp-area="" asp-controller="Events" asp-action="Index">EVENTS</a>
                         </li>
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MyMessages" asp-action="Index">MyMessages</a>
-                            </li>
-                            @if (unreadCount > 0)
-                            {
-                                <li class="nav-item">
-                                    (@unreadCount)
-                                </li>
-                            }
-
-                        }
-                        @if (!User.Identity.IsAuthenticated)
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Register</a>
+                                <a class="nav-link" asp-area="" asp-controller="MyMessages" asp-action="Index">
+                                    MESSAGES
+                                    @if (unreadCount > 0)
+                                    {
+                                        <span class="unread-badge">@unreadCount</span>
+                                    }
+                                </a>
                             </li>
 
-                        }
-
-                        @if (User.Identity.IsAuthenticated)
-                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MyData" asp-action="Index">MyData</a>
+                                <a class="nav-link" asp-area="" asp-controller="MyData" asp-action="Index">MY DATA</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MyTickets" asp-action="Index">MyTickets</a>
+                                <a class="nav-link" asp-area="" asp-controller="MyTickets" asp-action="Index">TICKETS</a>
                             </li>
-
-
 
                             @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
                             {
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown">
-                                        Admin
+                                        ADMIN
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Events" asp-action="Index">Events</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Index">Users</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Ptickets" asp-action="Index">Purchased tickets</a>
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Tickets" asp-action="Index">Tickets</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Events" asp-action="Index">EVENTS</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Users" asp-action="Index">USERS</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="Ptickets" asp-action="Index">TICKET SALES</a>
                                     </div>
                                 </li>
                             }
+                        }
+                    </ul>
 
+                    <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">LOGOUT</a>
                             </li>
-                            // @User.FindFirst(ClaimTypes.NameIdentifier)?.Value -
                             <li class="nav-item">
-                                ( @User.Identity.Name  )
+                                <span class="user-greeting">
+                                    @User.Identity.Name.ToUpper()
+                                </span>
                             </li>
-
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-area="" asp-controller="Register" asp-action="Index">REGISTER</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">LOGIN</a>
                             </li>
                         }
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
+    <main>
+        <div class="container main-content">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
         <div class="container">
-            &copy; 2025 - Mehujuhlat - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2025 - MEHUJUHLAT - <a asp-area="" asp-controller="Home" asp-action="Privacy" style="color: white; text-decoration: underline;">PRIVACY</a>
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -21,44 +21,57 @@ body {
   margin-bottom: 60px;
 }
 
-.message-container {
-    height: 300px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+.full-width-image-wrapper {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    overflow: hidden;
+    margin-bottom: 1rem;
 }
 
-    .message-container ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        scroll-behavior: smooth;
+.full-width-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.event-title a {
+    font-family: 'Fredoka One', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 3rem;
+    color: #fcfdf2;
+    text-shadow: 1px 1px 3px #ff3131;
+    text-decoration: none;
+}
+
+    .event-title a:hover {
+        color: #ff3131;
+        text-decoration: underline;
     }
-    .message-container.hidden {
-        display: none;
-    }
 
-.toggle-chat {
-    cursor: pointer;
-    color: blue;
-    text-decoration: underline;
-    margin-left: 10px;
-    font-weight: normal;
+.event-date {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #ff3131;
 }
 
-.toggle-chat:hover {
-        color: darkblue;
-}
-
-
-.message-user-link {
-    color: #000000;
-    text-decoration: underline;
-    cursor: pointer;
+.event-countdown {
+    font-size: 1rem;
+    color: #ff3131;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
+    font-family: 'Fredoka One', sans-serif;
 }
 
 
+
+.img-class {
+    max-width: 300px;
+    margin: 2rem auto;
+    display: block;
+
+}
