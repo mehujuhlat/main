@@ -41,7 +41,21 @@
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+            <div class="text-danger">@TempData["Alert"]</div>
         </form>
+        <br />
+     
+        <div> <a asp-action="Remove" asp-route-id="@Model.UserId" id="deleteAccountLink">Poista tunnukseni</a></div>
+
+        <script>
+            document.getElementById('deleteAccountLink').addEventListener('click', function(e) {
+                if (!confirm('Haluatko varmasti poistaa tunnuksesi? Tätä toimintoa ei voi peruuttaa.')) {
+                    e.preventDefault();
+                }
+            });
+        </script>
+
+
     </div>
 </div>
 

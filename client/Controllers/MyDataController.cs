@@ -26,10 +26,7 @@ namespace client.Controllers
         public async Task<IActionResult> Index()
         {
             int id = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-        
             var user = await _context.Users.FindAsync(id);
-
-    
             if (user == null || user.UserId != id )
             {
                 return NotFound();
@@ -38,14 +35,44 @@ namespace client.Controllers
             return View(user);
         }
 
-   
+        public async Task<IActionResult> Remove(int id)
+        {
+            int userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (userId != id)
+            {
+                return Forbid();
+            }
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction("Logout", "Auth");
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("UserId,Firstname,Lastname,Email,Password,Nickname")] User user)
         {
             int id = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             ModelState.Remove("Salt");
-            Debug.WriteLine("id :" + id);
             if (id != user.UserId)
             {
                 return Forbid();
@@ -82,7 +109,8 @@ namespace client.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            TempData["Alert"] = "Tapahtui virhe, tarkista syöttämäsi tiedot.";
+            return RedirectToAction(nameof(Index));
         }
 
         private bool UserExists(int id)

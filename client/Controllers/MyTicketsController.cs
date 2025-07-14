@@ -129,7 +129,8 @@ namespace client.Controllers
                 User u = await _context.Users.FindAsync(idx);
                 string body = "";
                 body += "Moi <strong>" + u.Nickname +"</strong><br>";
-                body += "Olet ostanut lipun tapahtumaan " + t.Event.Name + " henkilölle " + pticket.Firstname + " " + pticket.Lastname+"<br>";
+                body += "Olet ostanut lipun "+t.Description+" tapahtumaan " + t.Event.Name + " henkilölle " + pticket.Firstname + " " + pticket.Lastname+"<br>";
+                body += "Lipun hinta on " + t.Price.ToString() + "€<br>";
                 body += "Tässä lipun qr<br>";
                 body += "<img src=\""+Helper.appUrl+"/Api/GenQr/"+pticket.Code+"\"><br>";
                 Helper.sendMail(u.Email, "Lipunosto mehujuhliin", body);
