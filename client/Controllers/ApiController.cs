@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using QRCoder;
 using System.Diagnostics;
 using client.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace client.Controllers
 {
@@ -18,7 +19,6 @@ namespace client.Controllers
             _blobStorage = blobStorage;
             _context = context;
         }
-
 
         public ActionResult GenQR(string id)
         {
@@ -42,6 +42,7 @@ namespace client.Controllers
                 return StatusCode(500, "QR-koodin luonti epäonnistui");
             }
         }
+
 
         [HttpPost]
         public async Task<IActionResult> UploadImage(IFormFile file)

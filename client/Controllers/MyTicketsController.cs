@@ -127,13 +127,27 @@ namespace client.Controllers
                 _context.Add(pticket);
 
                 User u = await _context.Users.FindAsync(idx);
+                /*
                 string body = "";
                 body += "Moi <strong>" + u.Nickname +"</strong><br>";
                 body += "Olet ostanut lipun "+t.Description+" tapahtumaan " + t.Event.Name + " henkilölle " + pticket.Firstname + " " + pticket.Lastname+"<br>";
                 body += "Lipun hinta on " + t.Price.ToString() + "€<br>";
-                body += "Tässä lipun qr<br>";
+                body += $@"Avaa  <a href='{Helper.appUrl}/Home/Ticket/{pticket.Code}'>lippu</a> <br>";
                 body += "<img src=\""+Helper.appUrl+"/Api/GenQr/"+pticket.Code+"\"><br>";
                 Helper.sendMail(u.Email, "Lipunosto mehujuhliin", body);
+               */
+                string body = "";
+                body += "<h2>Lippu tapahtumaan: <strong>" + t.Event.Name + "</strong></h2>";
+                body += "<p>Lipun saaja: <strong>" + pticket.Firstname + " " + pticket.Lastname + "</strong></p>";
+                body += "<p>Lipputyyppi: <strong>" + t.Description + "</strong></p>";
+                body += "<p>Lipun hinta: <strong>" + t.Price.ToString() + "€</strong></p>";
+                body += "<p>Voit avata lipun alla olevasta linkistä</p>";
+                body += $@"<p><a href='{Helper.appUrl}/Home/Ticket/{pticket.Code}'>Näytä lippu</a></p>";
+                body += $@"<p><a href='{Helper.appUrl}/Events/Details/{t.Event.EventId}'>Tutustu tapahtumaan ja aikatauluihin</a></p>";
+                body += "<p><img src=\"" + Helper.appUrl + "/Api/GenQr/" + pticket.Code + "\"></p>";
+                body += "<p>Lähetä tämä viesti henkilölle, jolle olet ostanut lipun.</p>";
+                Helper.sendMail(u.Email, "Lippu tapahtumaan  "+t.Event.Name, body);
+
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

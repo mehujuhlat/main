@@ -20,6 +20,22 @@ namespace client.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Ticket(string id)
+        {
+            /*
+            var pTicket = await _context.Ptickets
+                .Include(p => p.Ticket)
+                .ThenInclude(t => t.Event)
+                .FirstOrDefaultAsync(p => p.Code == id);
+            if (pTicket == null)
+            {
+                return NotFound("Lippua ei löytynyt");
+            }*/
+            ViewData["Code"] = id;
+            return View();
+        }
+
+
         public async Task<IActionResult> Index()
         {
             var events = await _context.Events.Where(p=>p.Active==true).ToListAsync();
