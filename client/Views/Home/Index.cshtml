@@ -3,9 +3,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<!-- Täysleveä kuva -->
+<div class="full-width-image-wrapper">
+    <video autoplay muted loop playsinline class="full-width-image">
+        <source src="~/images/logovideo.mp4" type="video/mp4" />
+        Selaimesi ei tue videota.
+    </video>
+</div>
+
 <div class="text-center">
-    <img src="~/images/main.png" alt="Kuvaus" class="img-class">
+
     @foreach (var item in Model)
     {
         <script>
@@ -34,5 +41,3 @@
 
  
 </div>
-
-
