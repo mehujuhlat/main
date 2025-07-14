@@ -38,8 +38,40 @@ body {
     display: block;
 }
 
+.event-title a {
+    font-family: 'Fredoka One', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 3rem;
+    color: #fcfdf2;
+    text-shadow: 1px 1px 3px #ff3131;
+    text-decoration: none;
+}
+
+    .event-title a:hover {
+        color: #ff3131;
+        text-decoration: underline;
+    }
+
+.event-date {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #ff3131;
+}
+
+.event-countdown {
+    font-size: 1rem;
+    color: #ff3131;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    margin-top: 1rem;
+    font-family: 'Fredoka One', sans-serif;
+}
+
+
+
 .img-class {
     max-width: 300px;
     margin: 2rem auto;
     display: block;
+
 }

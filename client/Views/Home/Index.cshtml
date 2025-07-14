@@ -2,8 +2,9 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
 
-<!-- Täysleveä kuva -->
+<!-- Täysleveä video -->
 <div class="full-width-image-wrapper">
     <video autoplay muted loop playsinline class="full-width-image">
         <source src="~/images/logovideo.mp4" type="video/mp4" />
@@ -11,33 +12,48 @@
     </video>
 </div>
 
+<!-- Kuvapalkki keskelle -->
 <div class="text-center">
+    <img src="~/images/lippuotsikko.png" alt="Kuva" style="height: 8rem;" />
+</div>
 
+<!-- Tapahtumat -->
+<div class="text-center">
     @foreach (var item in Model)
     {
+        var eventId = item.EventId;
+        var dateString = item.Date?.ToString("o") ?? "";
+        var startDate = item.Date?.ToString("dd.MM.yyyy HH:mm") ?? "";
+
+        <h3 class="event-title">
+            <a href="/Events/Details/@eventId">@item.Name</a>
+        </h3>
+        <div class="event-date"><strong>@startDate</strong></div>
+        <div id="countdown-@eventId" class="event-countdown"></div>
+
         <script>
-            @{
-                    var dateString = item.Date.HasValue ? item.Date.Value.ToString("o"):"";
-                   var startDate = item.Date.HasValue ? item.Date.Value.ToString("dd.MM.yyyy HH:mm") : "";
-            }
+            (function () {
+                const countdownId = "countdown-@eventId";
+                const endDate = moment("@dateString");
 
-            setInterval(function() {
-      
-                     var endDate = moment("@dateString");
-                    var now = moment();
-                    var diff = moment.duration(endDate.diff(now));
+                function updateCountdown() {
+                    const now = moment();
+                    const diff = moment.duration(endDate.diff(now));
 
-                    document.getElementById('@Html.DisplayFor(modelItem => item.EventId)').innerHTML =
-                Math.floor(diff.asDays()) + " päivää " +
-                diff.hours() + " tuntia " +
-                diff.minutes() + " minuuttia " +
-                diff.seconds() + " sekuntia";
-            }, 1000);
+                    if (diff.asSeconds() > 0) {
+                        document.getElementById(countdownId).innerHTML =
+                            Math.floor(diff.asDays()) + " päivää " +
+                            diff.hours() + " tuntia " +
+                            diff.minutes() + " minuuttia " +
+                            diff.seconds() + " sekuntia";
+                    } else {
+                        document.getElementById(countdownId).innerHTML = "Tapahtuma on alkanut!";
+                    }
+                }
+
+                updateCountdown();
+                setInterval(updateCountdown, 1000);
+            })();
         </script>
-        <h3> <a href="/Events/Details/@item.EventId">@Html.DisplayFor(modelItem => item.Name)</a></h3>
-        <div><strong>@startDate</strong></div>
-        <div id="@Html.DisplayFor(modelItem => item.EventId)"></div>
     }
-
- 
 </div>
