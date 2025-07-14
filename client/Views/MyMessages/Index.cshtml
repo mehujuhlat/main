@@ -12,14 +12,14 @@
     int.TryParse(userId, out int id);
 }
 
-<h2>MyMessages</h2>
+<h2>VIESTIT</h2>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
 
 @{
     ViewData["CurrentUserId"] = id; 
 }
 
-<h3>Private</h3>
+<h3>Yksityiset</h3>
 <div class="toggle-chat" data-target="privateMessagesContainer">[Piilota]</div>
 <div class="message-container" id="privateMessagesContainer">
 <ul id="messagesPrivateList">
@@ -30,7 +30,7 @@
 </ul>
 </div>
 
-<h3>Global</h3>
+<h3>Julkiset</h3>
 <div class="toggle-chat" data-target="globalMessagesContainer">[Piilota]</div>
 <div class="message-container" id="globalMessagesContainer">
 <ul id="messagesList">

@@ -234,17 +234,17 @@
                 <div class="collapse navbar-collapse" id="navbarContent">
                     <ul class="navbar-nav mx-auto">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">HOME</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">KOTI</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Events" asp-action="Index">EVENTS</a>
+                            <a class="nav-link" asp-area="" asp-controller="Events" asp-action="Index">TAPAHTUMAT</a>
                         </li>
 
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="MyMessages" asp-action="Index">
-                                    MESSAGES
+                                    VIESTIT
                                     @if (unreadCount > 0)
                                     {
                                         <span class="unread-badge">@unreadCount</span>
@@ -253,10 +253,10 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="MyData" asp-action="Index">MY DATA</a>
+                                <a class="nav-link" asp-area="" asp-controller="MyData" asp-action="Index">TIETONI</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="MyTickets" asp-action="Index">TICKETS</a>
+                                <a class="nav-link" asp-area="" asp-controller="MyTickets" asp-action="Index">LIPPUNI</a>
                             </li>
 
                             @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
@@ -280,7 +280,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">LOGOUT</a>
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Logout">ULOS</a>
                             </li>
                             <li class="nav-item">
                                 <span class="user-greeting">
@@ -291,10 +291,10 @@
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Register" asp-action="Index">REGISTER</a>
+                                <a class="nav-link" asp-area="" asp-controller="Register" asp-action="Index">REKISTERÖIDY</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">LOGIN</a>
+                                <a class="nav-link" asp-area="" asp-controller="Auth" asp-action="Login">KIRJAUDU</a>
                             </li>
                         }
 
