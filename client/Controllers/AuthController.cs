@@ -110,15 +110,60 @@ namespace client.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Recover([Bind("Email")] RecoverUser recoverUser)
         {
+            var u = _context.Users.SingleOrDefault(x => x.Email == recoverUser.Email);
 
+            if ( u == null )
+            {
+                ViewData["notFound"] = "Sähköpostia "+recoverUser.Email+" ei löydy.";
+                return View();
+            }
             string recoverId = Helper.GenerateRandomString(10);
             RecoverPassword.Store(recoverId, recoverUser, TimeSpan.FromHours(10));
 
+            /*
             string body = "";
             body += "Seuraavasta linkistä voit luoda uuden salasanan Mehujuhliin. <br>";
             body += "<a href=\"" + Helper.appUrl + "/Auth/NewPassword/" + recoverId + "\">" + Helper.appUrl + "/Auth/NewPassword/" + recoverId + "</a>";
             Helper.sendMail(recoverUser.Email, "Luo uusi salasana Mehujuhliin", body);
+            */
+
+            // AI:n tekemä sähköposti 
+            string body = $@"
+<div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;'>
+    <div style='background-color: #6f42c1; color: white; padding: 20px; text-align: center;'>
+        <h2>Mehujuhlat</h2>
+    </div>
+    
+    <div style='padding: 20px;'>
+        <p>Hei!</p>
+        <p>Olet pyytänyt uuden salasanan luomista Mehujuhliin. Paina alla olevaa painiketta vaihtaaksesi salasanasi.</p>
+        
+        <div style='text-align: center; margin: 30px 0;'>
+            <a href='{Helper.appUrl}/Auth/NewPassword/{recoverId}' 
+               style='background-color: #6f42c1; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold;'>
+                Luo uusi salasana
+            </a>
+        </div>
+        
+        <p>Jos et ole pyytänyt salasanan vaihtoa, voit jättää tämän viestin huomioimatta.</p>
+        
+        <p style='color: #666; font-size: 12px; margin-top: 30px;'>
+            Tämä linkki on voimassa yhden tunnin. Jos linkki ei toimi, kopioi seuraava osoite selaimeen:<br>
+            {Helper.appUrl}/Auth/NewPassword/{recoverId}
+        </p>
+    </div>
+    
+    <div style='background-color: #f8f9fa; color: #666; padding: 15px; text-align: center; font-size: 12px;'>
+        © {DateTime.Now.Year} Mehujuhlat. Kaikki oikeudet pidätetään.
+    </div>
+</div>";
+            Helper.sendMail(recoverUser.Email, "Luo uusi salasana Mehujuhliin", body);
+
+
+
+            TempData["pswChange"] = "Linkki salasanan vaihtamiseen on lähetetty sähköpostiin "+recoverUser.Email;
             return RedirectToAction("Login");
+
         }
 
 
@@ -142,7 +187,7 @@ namespace client.Controllers
             {
                 return Forbid();
             }
-
+            
             var u = _context.Users.SingleOrDefault(x => x.Email == ru.Email);
             if ( u != null)
             {
@@ -152,9 +197,12 @@ namespace client.Controllers
                 RecoverPassword.Remove(recoverUser.Id);
                 TempData["pswChange"] = "Salasana on vaihdettu onnistuneesti.";
                 return RedirectToAction("Login");
+            } else
+            {
+                TempData["pswChange"] = "Salasanan vaihto epäonnistui.";
             }
 
-            return View(nameof(Login));
+                return View(nameof(Login));
         }
 
     }

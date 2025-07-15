@@ -54,7 +54,9 @@
 <ul>
    @foreach ( var item in Model.Images)
    {
-        <li>@item.ImageId - @item.Title - @item.Url  <a href="/Admin/Events/DeleteImage/@item.ImageId">[X]</a> </li>
+        <li><span style="cursor: pointer; text-decoration: underline; color: blue;" onclick="copyToClipboard('@item.Url')">[kopioi url]</span> 
+            @item.ImageId - @item.Title - @item.Url  
+            <a href="/Admin/Events/DeleteImage/@item.ImageId">[X]</a> </li>
    }
 </ul>
 
@@ -77,6 +79,50 @@
     </div>
     <button type="submit" class="btn btn-primary">Lähetä kuva</button>
 </form>
+
+<script>
+   // AI
+    document.addEventListener('DOMContentLoaded', function() {
+        const textareas = document.querySelectorAll('textarea');
+
+        textareas.forEach(textarea => {
+            textarea.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    e.preventDefault();
+
+                    const start = this.selectionStart;
+                    const end = this.selectionEnd;
+
+                    this.value = this.value.substring(0, start) + '\t' + this.value.substring(end);
+                    this.selectionStart = this.selectionEnd = start + 1;
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+     // AI
+    function copyToClipboard(text) {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';  
+        document.body.appendChild(textarea);
+        textarea.select();
+
+        try {
+           
+            const successful = document.execCommand('copy');
+            const msg = successful ? 'osoite kopioitu!' : 'kopiointi epäonnistui';
+            alert(msg);
+        } catch (err) {
+            alert('Kopiointi epäonnistui: ' + err);
+        }
+
+        document.body.removeChild(textarea);
+    }
+</script>
 
 <div>
     <a asp-action="Index">Back to List</a>
