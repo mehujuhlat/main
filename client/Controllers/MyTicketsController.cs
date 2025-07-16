@@ -136,6 +136,8 @@ namespace client.Controllers
                 body += "<img src=\""+Helper.appUrl+"/Api/GenQr/"+pticket.Code+"\"><br>";
                 Helper.sendMail(u.Email, "Lipunosto mehujuhliin", body);
                */
+
+                /*
                 string body = "";
                 body += "<h2>Lippu tapahtumaan: <strong>" + t.Event.Name + "</strong></h2>";
                 body += "<p>Lipun saaja: <strong>" + pticket.Firstname + " " + pticket.Lastname + "</strong></p>";
@@ -147,6 +149,94 @@ namespace client.Controllers
                 body += "<p><img src=\"" + Helper.appUrl + "/Api/GenQr/" + pticket.Code + "\"></p>";
                 body += "<p>Lähetä tämä viesti henkilölle, jolle olet ostanut lipun.</p>";
                 Helper.sendMail(u.Email, "Lippu tapahtumaan  "+t.Event.Name, body);
+                */
+
+                string body = $@"
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {{
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }}
+        .header {{
+            background-color: #d4edda;
+            padding: 20px;
+            text-align: center;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }}
+        .ticket-info {{
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }}
+        .button {{
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 10px 0;
+        }}
+        .qr-code {{
+            text-align: center;
+            margin: 20px 0;
+        }}
+        .footer {{
+            margin-top: 30px;
+            font-size: 0.8em;
+            color: #6c757d;
+            text-align: center;
+        }}
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <h1>Lipun vahvistus: {t.Event.Name}</h1>
+        <p>Kiitos ostoksestasi!</p>
+    </div>
+    
+    <p>Hei {pticket.Firstname} {pticket.Lastname},</p>
+    
+    <p>Olet saanut lipun seuraavaan tapahtumaan. Alla lipun tiedot:</p>
+    
+    <div class='ticket-info'>
+        <h3>Lipun tiedot</h3>
+        <p><strong>Tapahtuma:</strong> {t.Event.Name}</p>
+        <p><strong>Lipputyyppi:</strong> {t.Description}</p>
+        <p><strong>Hinta:</strong> {t.Price.ToString()}€</p>
+    </div>
+    
+    <div class='qr-code'>
+        <img src='{Helper.appUrl}/Api/GenQr/{pticket.Code}' alt='QR-koodi'>
+    </div>
+    
+    <div style='text-align: center;'>
+        <a href='{Helper.appUrl}/Home/Ticket/{pticket.Code}' class='button'>Näytä lippu</a>
+    </div>
+    
+    <p style='text-align: center;'>
+        <a href='{Helper.appUrl}/Events/Details/{t.Event.EventId}'>Tutustu tapahtumaan ja aikatauluihin</a>
+    </p>
+    
+    <p>Lähetä tämä viesti henkilölle, jolle olet ostanut lipun.</p>
+    
+    <div class='footer'>
+        <p>Tämä on automaattinen viesti, älä vastaa tähän viestiin.</p>
+        <p>© {DateTime.Now.Year} {t.Event.Name}</p>
+    </div>
+</body>
+</html>";
+
+                Helper.sendMail(u.Email, $"Lippu tapahtumaan: {t.Event.Name}", body);
 
 
                 await _context.SaveChangesAsync();
