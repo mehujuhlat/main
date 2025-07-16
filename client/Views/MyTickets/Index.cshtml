@@ -1,7 +1,7 @@
 ﻿@model client.Controllers.UserTicketsViewModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lippuni";
 }
 
 Osta lippu tapahtumaan
@@ -61,7 +61,8 @@ Osta lippu tapahtumaan
                     @if (!item.Cancel.Value)
                     {
                         <a asp-action="Cancel" asp-route-id="@item.PticketId"
-                           class="btn btn-outline-danger btn-sm w-100">
+                           class="btn btn-outline-danger btn-sm w-100"
+                           onclick="return confirm('Haluatko varmasti peruuttaa tämän oston?');">
                             <i class="fas fa-times-circle me-1"></i> Peru osto
                         </a>
                     }
@@ -81,7 +82,7 @@ Osta lippu tapahtumaan
                     <div class="modal-header">
                         <h5 class="modal-title">
                             <i class="fas fa-qrcode me-2"></i>
-                            @item.Ticket.Event.Name - QR-koodi
+                            @item.Ticket.Event.Name
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>

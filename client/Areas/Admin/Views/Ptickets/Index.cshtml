@@ -13,8 +13,13 @@
     }
 </ul>
 
-
-<h4>@ViewData["EventName"]</h4>
+@if (ViewData["EventName"] != null) 
+{
+<div class="d-flex justify-content-between align-items-center">
+    <h4>@ViewData["EventName"]</h4>
+    <a href="#bottom">Yhteenveto</a>
+</div>
+}
 
 @if ( Convert.ToInt32(ViewData["id"]) > 0)
 {
@@ -75,6 +80,7 @@
     var cancelCount = 0;
     var okCount = 0;
     var vipCount = 0;
+    var normalCount = 0;
     decimal? totalSum = 0;
     foreach( var item in Model.PTickets)
     {
@@ -90,6 +96,8 @@
 
             if (item.Ticket.Type == 2)
                 vipCount++;
+            if (item.Ticket.Type == 1)
+                normalCount++;
             for (int i = 0; i < 3; i++)
             {
                 var b = Helper.IsNullableBitTrue(item.Ticket.Day, i);
@@ -104,7 +112,7 @@
         }
     }
 
-
+    <div id="bottom"></div>
     <div class="container mt-4">
         <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white" style="background-color:#ff3131 !important">
@@ -141,7 +149,7 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="card  shadow-sm mb-3">
-                    <div class="card-header bg-info text-white">
+                    <div class="card-header bg-info text-white" style="background-color:#ff3131 !important">
                         <h5 class="mb-0">Liput yhteenveto</h5>
                     </div>
                     <div class="card-body">
@@ -154,7 +162,11 @@
                             <span>@vipCount</span>
                         </div>
                         <div class="d-flex justify-content-between mb-2">
-                            <span>Ostetut (ei peruutetut) liput</span>
+                            <span>Normaalit Liput</span>
+                            <span>@normalCount</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Ostetut (ei peruutetut) liput yhteensä</span>
                             <span>@okCount</span>
                         </div>
                     </div>
@@ -163,7 +175,7 @@
 
             <div class="col-md-6">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-success text-white">
+                    <div class="card-header bg-success text-white" style="background-color:#ff3131 !important">
                         <h5 class="mb-0">Tulot</h5>
                     </div>
                     <div class="card-body text-center">

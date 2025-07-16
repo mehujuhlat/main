@@ -44,6 +44,7 @@ namespace client.Controllers
                 return NotFound();
             }
 
+            
             var @event = await _context.Events.Include(p=>p.Images).Include(p => p.Tickets.Where(t => t.Valid==true)).FirstOrDefaultAsync(m => m.EventId == id );
             if (@event == null)
             {

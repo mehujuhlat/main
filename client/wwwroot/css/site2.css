@@ -1,0 +1,9 @@
+﻿.private-message-label {
+    color: rgb(128, 128, 128);
+    transition: color 0.3s ease;
+}
+
+#PrivateInput:checked ~ .private-message-label,
+#PrivateInput:checked + .private-message-label {
+    color: inherit;
+}

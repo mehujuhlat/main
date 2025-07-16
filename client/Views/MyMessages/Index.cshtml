@@ -4,7 +4,7 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Viestit";
 }
 
 @{
@@ -18,9 +18,10 @@
 @{
     ViewData["CurrentUserId"] = id; 
 }
-
-<h3>Yksityiset</h3>
+<div class="d-flex justify-content-between align-items-center">
+<h3>Yksityinen</h3>
 <div class="toggle-chat" data-target="privateMessagesContainer">[Piilota]</div>
+</div>
 <div class="message-container" id="privateMessagesContainer">
 <ul id="messagesPrivateList">
     @foreach (var item in Model.PrivateMessages)
@@ -29,9 +30,10 @@
     }
 </ul>
 </div>
-
-<h3>Julkiset</h3>
+<div class="d-flex justify-content-between align-items-center">
+<h3>Julkinen</h3>
 <div class="toggle-chat" data-target="globalMessagesContainer">[Piilota]</div>
+</div>
 <div class="message-container" id="globalMessagesContainer">
 <ul id="messagesList">
     @foreach (var item in Model.Messages)
@@ -55,10 +57,10 @@
         </div>
         <div class="form-group form-check">
             <input id="PrivateInput" type="checkbox" class="form-check-input" asp-for="NewMessage.Private" />
-            <label class="form-check-label">Yksityinen viesti</label>
+            <label class="form-check-label private-message-label">Yksityinen viesti</label>
         </div>
         <div class="form-group">
-            <input id="sendButton" value="SendMessage" class="btn btn-primary" />
+            <input id="sendButton" value="Lähetä viesti" class="btn btn-primary" />
         </div>
     </div>
 </div>
