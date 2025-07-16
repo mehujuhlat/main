@@ -63,7 +63,7 @@ namespace client.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,Name,Description,Active,Date,Program,DateEnd")] Event @event)
+        public async Task<IActionResult> Create([Bind("EventId,Name,Description,Active,Date,Program,DateEnd,MaxVisitors")] Event @event)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +96,7 @@ namespace client.Areas.Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EventId,Name,Description,Active,Date,Program,DateEnd")] Event @event)
+        public async Task<IActionResult> Edit(int id, [Bind("EventId,Name,Description,Active,Date,Program,DateEnd,MaxVisitors")] Event @event)
         {
             if (id != @event.EventId)
             {

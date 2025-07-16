@@ -19,6 +19,8 @@ public partial class Event
 
     public DateTime? DateEnd { get; set; }
 
+    public int? MaxVisitors { get; set; }
+
     public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();

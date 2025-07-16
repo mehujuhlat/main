@@ -74,6 +74,7 @@
 {
     <div>Valitse tapahtuma</div>
 }
+
 @if (Model.PTickets.Count  > 0)
 {
 	var visitors = new Dictionary<int, int>();
@@ -137,7 +138,7 @@
                                 var currentDate = @baseDate.AddDays(item.Key);
                                 <tr>
                                     <td>@(item.Key + 1). @currentDate.ToString("dddd", new System.Globalization.CultureInfo("fi-FI"))</td>
-                                    <td class="text-right"><strong>@item.Value</strong></td>
+                                    <td class="text-right"><strong>@item.Value / @Model.SelectedEvent.MaxVisitors</strong></td>
                                 </tr>
                             }
                         </tbody>

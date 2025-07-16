@@ -10,6 +10,7 @@ using Azure.Security.KeyVault.Secrets;
 
 namespace client.App_Code
 {
+
     public static class AppSecrets
     {
         public static string EmailPassword { get; private set; } = null!;
