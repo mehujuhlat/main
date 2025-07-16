@@ -31,7 +31,15 @@ namespace client.App_Code
 
         public static string appUrl => _env.IsDevelopment() ? "https://localhost:7137" : "https://mehujuhlat.azurewebsites.net";
 
-       
+
+        public static bool IsNullableBitTrue(int? nullableInt, int bitPosition)
+        {
+            if (!nullableInt.HasValue || bitPosition < 0 || bitPosition > 31)
+                return false;
+            int value = nullableInt.Value;
+            return (value & (1 << bitPosition)) != 0;
+        }
+
         /*
         public static string GetSecret(string secretName)
         {

@@ -18,6 +18,7 @@ namespace client.Areas.Admin.Controllers
     {
         public List<Pticket> PTickets { get; set; }
         public List<Event> AllEvents { get; set; }
+        public Event SelectedEvent { get; set; }
     }
 
     [Area("Admin")]
@@ -38,7 +39,8 @@ namespace client.Areas.Admin.Controllers
             var viewModel = new PTicketsEventsViewModel
             {
                 PTickets = await _context.Ptickets.Where(p => p.Ticket.Event.EventId == id).Include(p => p.Ticket).ThenInclude(t => t.Event).Include(p => p.User).ToListAsync(),
-                AllEvents = await _context.Events.ToListAsync()
+                AllEvents = await _context.Events.ToListAsync(),
+                SelectedEvent = await _context.Events.FirstOrDefaultAsync(e => e.EventId == id)
             };
             Event ev = await _context.Events.FindAsync(id);
             if (ev != null)

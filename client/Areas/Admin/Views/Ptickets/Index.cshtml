@@ -1,5 +1,5 @@
 ﻿@model client.Areas.Admin.Controllers.PTicketsEventsViewModel
-
+@using client.App_Code
 @{
     ViewData["Title"] = "Index";
 }
@@ -18,7 +18,7 @@
 
 @if ( Convert.ToInt32(ViewData["id"]) > 0)
 {
-<table class="table">
+<table class="table table-sm">
     <thead>
         <tr>
             <th>Date</th>
@@ -39,7 +39,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Ticket.Description)
+                   @Html.DisplayFor(modelItem => item.Ticket.Description)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price) €
@@ -69,8 +69,111 @@
 {
     <div>Valitse tapahtuma</div>
 }
-@if (Convert.ToDecimal(ViewData["TotalSum"]) > 0)
+@if (Model.PTickets.Count  > 0)
 {
-    <div> Lipputulot yhteensä : <strong>@ViewData["TotalSum"] €</strong> </div>
-    <div> Ostettuja lippuja yhteensä : <strong>@ViewData["TotalTickets"]</strong></div>
+	var visitors = new Dictionary<int, int>();
+    var cancelCount = 0;
+    var okCount = 0;
+    var vipCount = 0;
+    decimal? totalSum = 0;
+    foreach( var item in Model.PTickets)
+    {
+        if ( item.Cancel == true )
+        {
+            cancelCount++;
+        }
+        
+        if (item.Cancel.Value == false)
+        {
+            totalSum += item.Price.Value;
+            okCount++;
+
+            if (item.Ticket.Type == 2)
+                vipCount++;
+            for (int i = 0; i < 3; i++)
+            {
+                var b = Helper.IsNullableBitTrue(item.Ticket.Day, i);
+                if (b)
+                {
+                    if (!visitors.ContainsKey(i))
+                        visitors.Add(i, 0);
+                    visitors[i]++;
+                }
+
+            }
+        }
+    }
+
+
+    <div class="container mt-4">
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-primary text-white" style="background-color:#ff3131 !important">
+                <h5 class="mb-0">Päivittäinen kävijämäärä</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Päivä</th>
+                                <th class="text-right">Kävijöitä</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                                var baseDate = Model.SelectedEvent.Date.Value;
+                            }
+                            @foreach (var item in visitors)
+                            {
+                                var currentDate = @baseDate.AddDays(item.Key);
+                                <tr>
+                                    <td>@(item.Key + 1). @currentDate.ToString("dddd", new System.Globalization.CultureInfo("fi-FI"))</td>
+                                    <td class="text-right"><strong>@item.Value</strong></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card  shadow-sm mb-3">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Liput yhteenveto</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Peruutetut liput</span>
+                            <span>@cancelCount</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>VIP-liput</span>
+                            <span>@vipCount</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Ostetut (ei peruutetut) liput</span>
+                            <span>@okCount</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Tulot</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <h4 class="text-success">@totalSum €</h4>
+                        <p class="text-muted mb-0">Lipputulot yhteensä</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 }
