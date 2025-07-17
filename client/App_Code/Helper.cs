@@ -11,6 +11,14 @@ using Azure.Security.KeyVault.Secrets;
 namespace client.App_Code
 {
 
+    public class VisitorCount
+    {
+        public int Vip { get; set; }
+        public int Normal { get; set; }
+        public int Child { get; set; }
+    }
+
+
     public static class AppSecrets
     {
         public static string EmailPassword { get; private set; } = null!;

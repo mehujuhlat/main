@@ -21,6 +21,8 @@ public partial class Event
 
     public int? MaxVisitors { get; set; }
 
+    public int? MaxVisitorsVip { get; set; }
+
     public virtual ICollection<Image> Images { get; set; } = new List<Image>();
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();

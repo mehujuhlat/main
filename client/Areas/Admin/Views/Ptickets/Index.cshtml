@@ -77,11 +77,13 @@
 
 @if (Model.PTickets.Count  > 0)
 {
-	var visitors = new Dictionary<int, int>();
+    var visitors = new Dictionary<int, VisitorCount>();
     var cancelCount = 0;
     var okCount = 0;
     var vipCount = 0;
     var normalCount = 0;
+    var childCount = 0;
+
     decimal? totalSum = 0;
     foreach( var item in Model.PTickets)
     {
@@ -95,18 +97,36 @@
             totalSum += item.Price.Value;
             okCount++;
 
-            if (item.Ticket.Type == 2)
-                vipCount++;
-            if (item.Ticket.Type == 1)
-                normalCount++;
+                switch (item.Ticket.Type) {
+                    case 1:
+                        normalCount++;
+                        break;
+                    case 2:
+                        vipCount++;
+                        break;
+                    case 3:
+                        childCount++;
+                        break;
+			        }
+    
             for (int i = 0; i < 3; i++)
             {
                 var b = Helper.IsNullableBitTrue(item.Ticket.Day, i);
                 if (b)
                 {
                     if (!visitors.ContainsKey(i))
-                        visitors.Add(i, 0);
-                    visitors[i]++;
+                        visitors.Add(i, new VisitorCount { Normal = 0, Vip = 0, Child = 0 });
+                    switch (item.Ticket.Type) {
+                        case 1:
+                            visitors[i].Normal++;
+                            break;
+                        case 2:
+                            visitors[i].Vip++;
+                            break;
+                        case 3:
+                            visitors[i].Child++;
+                            break;
+					}
                 }
 
             }
@@ -119,13 +139,15 @@
             <div class="card-header bg-primary text-white" style="background-color:#ff3131 !important">
                 <h5 class="mb-0">Päivittäinen kävijämäärä</h5>
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-sm">
+            <div class="card-body p-1">
+                <table class="table table-sm mb-0  table-striped">
                         <thead>
                             <tr>
                                 <th>Päivä</th>
-                                <th class="text-right">Kävijöitä</th>
+                                <th>Aikuiset</th>
+                                <th>Lapset</th>
+                                <th>VIP-Kävijät</th>
+                                <th>Yhteensä</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,50 +159,60 @@
                             {
                                 var currentDate = @baseDate.AddDays(item.Key);
                                 <tr>
-                                    <td>@(item.Key + 1). @currentDate.ToString("dddd", new System.Globalization.CultureInfo("fi-FI"))</td>
-                                    <td class="text-right"><strong>@item.Value / @Model.SelectedEvent.MaxVisitors</strong></td>
+                                    <td>@currentDate.ToString("dddd", new System.Globalization.CultureInfo("fi-FI"))</td>
+                                    <td><strong>@item.Value.Normal / @(Model.SelectedEvent.MaxVisitors - item.Value.Vip)</strong></td>
+                                    <td><strong>@item.Value.Child / @(Model.SelectedEvent.MaxVisitors - item.Value.Vip)</strong></td>
+                                    <td><strong>@item.Value.Vip / @Model.SelectedEvent.MaxVisitorsVip</strong></td>
+                                    <td><strong>@(item.Value.Vip+item.Value.Normal+item.Value.Child) / @Model.SelectedEvent.MaxVisitors</strong></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                </div>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <div class="card  shadow-sm mb-3">
+                <div class="card  shadow-sm mb-3 h-100">
                     <div class="card-header bg-info text-white" style="background-color:#ff3131 !important">
                         <h5 class="mb-0">Liput yhteenveto</h5>
                     </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Peruutetut liput</span>
-                            <span>@cancelCount</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>VIP-liput</span>
-                            <span>@vipCount</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Normaalit Liput</span>
-                            <span>@normalCount</span>
-                        </div>
-                        <div class="d-flex justify-content-between mb-2">
-                            <span>Ostetut (ei peruutetut) liput yhteensä</span>
-                            <span>@okCount</span>
-                        </div>
+                    <div class="card-body p-1">
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <td>Peruutetut liput</td>
+                                    <td class="text-end">@cancelCount</td>
+                                </tr>
+                                <tr class="border-top">
+                                    <td>VIP-liput</td>
+                                    <td class="text-end">@vipCount</td>
+                                </tr>
+                                <tr class="border-top">
+                                    <td>Normaalit Liput</td>
+                                    <td class="text-end">@normalCount</td>
+                                </tr>
+                                <tr class="border-top">
+                                    <td>Lasten Liput</td>
+                                    <td class="text-end">@childCount</td>
+                                </tr>
+                                <tr class="border-top">
+                                    <td>Ostetut (ei peruutetut) liput yhteensä</td>
+                                    <td class="text-end">@okCount</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <div class="card shadow-sm">
+                <div class="card shadow-sm h-100">
                     <div class="card-header bg-success text-white" style="background-color:#ff3131 !important">
                         <h5 class="mb-0">Tulot</h5>
                     </div>
-                    <div class="card-body text-center">
-                        <h4 class="text-success">@totalSum €</h4>
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
+                        <h3 class="text-success text">@totalSum €</h3>
                         <p class="text-muted mb-0">Lipputulot yhteensä</p>
                     </div>
                 </div>
