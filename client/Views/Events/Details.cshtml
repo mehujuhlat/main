@@ -27,88 +27,127 @@
             <img src="~/images/NewFolder/Esiintyjat.png" alt="Esiintyjat" style="height:6.5rem" />
         </div>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist01.jpg" class="card-img-top" alt="Jesse Markkula(FI)">
-                    <div class="card-body">
-                        <h5 class="card-title">Jesse Markkula (FI)</h5>
+        @if (Model.Name == "Porvoon Mehujuhlat 2025")
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist01.jpg" class="card-img-top" alt="Jesse Markkula(FI)">
+                        <div class="card-body">
+                            <h5 class="card-title">Jesse Markkula (FI)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist02.jpg" class="card-img-top" alt="Lime Lights(UK)">
+                        <div class="card-body">
+                            <h5 class="card-title">Lime Lights (UK)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist03.jpg" class="card-img-top" alt="AURORA(NO)">
+                        <div class="card-body">
+                            <h5 class="card-title">AURORA (NO)</h5>
+                        </div>
+                    </div>
+                </div> 
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist04.jpg" class="card-img-top" alt="Colorful Juice Band(NL)">
+                        <div class="card-body">
+                            <h5 class="card-title">Colorful Juice Band (NL)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist05.jpg" class="card-img-top" alt="Iiris Vesik (EE)">
+                        <div class="card-body">
+                            <h5 class="card-title">Iiris Vesik (EE)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist06.jpg" class="card-img-top" alt="Ruusut (FI)">
+                        <div class="card-body">
+                            <h5 class="card-title">Ruusut(FI)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist10.jpg" class="card-img-top" alt="The Citrus Club (US)">
+                        <div class="card-body">
+                            <h5 class="card-title">The Citrus Club (US)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist08.jpg" class="card-img-top" alt="Tanhuryhmä Tropiikki">
+                        <div class="card-body">
+                            <h5 class="card-title">Tanhuryhmä Tropiikki</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder1/artist11.jpg" class="card-img-top" alt="JVK & Special Guests">
+                        <div class="card-body">
+                            <h5 class="card-title">JVK & Special Guests</h5>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist02.jpg" class="card-img-top" alt="Lime Lights(UK)">
-                    <div class="card-body">
-                        <h5 class="card-title">Lime Lights (UK)</h5>
+        }
+        else if (Model.Name == "Porvoon Mehujuhlat After Party 2025")
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder2/artist01.jpg" class="card-img-top" alt="Nectar (USA) feat. Juice June (USA)">
+                        <div class="card-body">
+                            <h5 class="card-title">Nectar (USA) feat. Juice June (USA)</h5>
+                        </div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder2/artist01.jpg" class="card-img-top" alt="Tropical Voltage (SWE)">
+                        <div class="card-body">
+                            <h5 class="card-title">Tropical Voltage (SWE)</h5>
+                        </div>
+                    </div>
+                </div> <div class="col-md-4">
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder2/artist01.jpg" class="card-img-top" alt="DJ Tropix (FI)">
+                        <div class="card-body">
+                            <h5 class="card-title">DJ Tropix (FI)</h5>
+                        </div>
+                    </div>
+                    <div class="card text-center mb-4">
+                        <img src="~/images/NewFolder2/artist.jpg" class="card-img-top" alt="Honeydrop (UK)">
+                        <div class="card-body">
+                            <h5 class="card-title">Honeydrop (UK)</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lisää muut after party artistit tähän -->
             </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist03.jpg" class="card-img-top" alt="AURORA(NO)">
-                    <div class="card-body">
-                        <h5 class="card-title">AURORA (NO)</h5>
-                    </div>
-                </div>
-            </div> 
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist04.jpg" class="card-img-top" alt="Colorful Juice Band(NL)">
-                    <div class="card-body">
-                        <h5 class="card-title">Colorful Juice Band (NL)</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist05.jpg" class="card-img-top" alt="Iiris Vesik (EE)">
-                    <div class="card-body">
-                        <h5 class="card-title">Iiris Vesik (EE)</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist06.jpg" class="card-img-top" alt="Ruusut (FI)">
-                    <div class="card-body">
-                        <h5 class="card-title">Ruusut(FI)</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist10.jpg" class="card-img-top" alt="The Citrus Club (US)">
-                    <div class="card-body">
-                        <h5 class="card-title">The Citrus Club (US)</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist08.jpg" class="card-img-top" alt="Tanhuryhmä Tropiikki">
-                    <div class="card-body">
-                        <h5 class="card-title">Tanhuryhmä Tropiikki</h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card text-center mb-4">
-                    <img src="~/images/NewFolder1/artist11.jpg" class="card-img-top" alt="JVK & Special Guests">
-                    <div class="card-body">
-                        <h5 class="card-title">JVK & Special Guests</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
+        }
     </div>
     </section>
 
