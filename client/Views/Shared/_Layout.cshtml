@@ -22,13 +22,17 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chewy&family=Fredoka+One&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <style>
         :root {
-            --neon-pink: #ff3fa4;
-            --electric-blue: #00f5ff;
-            --lime-green: #b2ff59;
-            --vibrant-purple: #b04cff;
-            --confetti-yellow: #ffde59;
+            --red: #ff3131;
+            --yellow: #fcc830;
+            --dark-green: #1f924c;
+            --green: #249d48;
+            --vanilla: #ffe7c2;
+            --off-white: #fcfdf2;
+            --gray: #333333;
+
         }
 
         /* FLEXBOX LAYOUT - FOOTER ALAHAALLA */
@@ -37,10 +41,12 @@
             flex-direction: column;
             min-height: 100vh;
             font-family: 'Fredoka One', sans-serif;
-            background-color: #ffe7c2;
             margin: 0;
-            background-image: url('/images/keltataustat.png');
-            overflow-x: ;
+            background-image: url('images/taustakuva2.png'); /* Polku kuvaan */
+            background-size: cover; /* Skaalaa kuva täyttämään koko taustan */
+            background-repeat: no-repeat; /* Estää kuvan toistumisen */
+            background-position: center; /* Keskittää kuvan */
+            background-attachment: fixed; /* Kiinnittää kuvan paikoilleen scrollatessa */
         }
 
         main {
@@ -53,14 +59,14 @@
 
         /* NAVBAR (3D-EFFECT) */
         .navbar {
-            background: #ffe7c2;
+            background: var(--vanilla);
             padding: 0.5rem 1rem;
         }
 
         .navbar-brand {
             font-family: 'Chewy', cursive;
             font-size: 2.5rem;
-            color: white !important;
+            color: var(--off-white);
             text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
             transform: skewY(1deg);
             letter-spacing: 1px;
@@ -69,8 +75,8 @@
         /* FOOTER (GLOWING EFFECT) */
         footer {
             margin-top: auto;
-            background: #ffe7c2;
-            color: #fff;
+            background: var(--vanilla);
+            color: var(--off-white);
             text-align: center;
             padding: 1.5rem 0;
             position: relative;
@@ -85,12 +91,13 @@
                 left: 0;
                 right: 0;
                 height: 10px;
-                background: linear-gradient(90deg, transparent, var(--confetti-yellow), transparent);
+                background: linear-gradient(90deg, transparent, var(--yellow), transparent);
             }
 
         /* NAV-LINKIT (HOVER-ANIMAATIO) */
         .nav-link {
             color: white !important;
+            font-family: 'Fredoka One', sans-serif;
             font-weight:normal;
             margin: 0 5px;
             padding: 10px 20px !important;
@@ -126,8 +133,8 @@
 
         /* UNREAD BADGE (BOUNCE EFFECT) */
         .unread-badge {
-            background-color: var(--confetti-yellow);
-            color: #333;
+            background-color: var(--yellow);
+            color: var(--dark-green);
             border-radius: 50%;
             padding: 3px 8px;
             font-size: 0.9rem;
@@ -138,10 +145,10 @@
 
         /* USER GREETING (NEON GLOW) */
         .user-greeting {
-            background-color: #ff3131;
+            background-color: var(--red);
             border-radius: 50px;
             padding: 5px 15px;
-            color: #fcfdf2;
+            color: var(--off-white);
             font-weight: normal;
             box-shadow: 0 0 10px;
         }
@@ -156,7 +163,7 @@
         }
 
         .dropdown-item {
-            color: var(--vibrant-purple) !important;
+            color: var(--yellow);
             font-weight: normal;
         }
 
@@ -166,10 +173,12 @@
 
         /* MAIN CONTENT (FLOATING CARD) */
         .main-content {
+            background-color: rgba(255, 231, 194, 0.7);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 0;
-            margin: 4rem auto, 0;
+            margin: 4rem 0;
+            margin-top: 0;
             max-width: 1200px;
             border: 0;
         }

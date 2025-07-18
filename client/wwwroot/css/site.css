@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+   margin: 0;
 }
 
 .full-width-image-wrapper {
@@ -30,6 +30,8 @@ body {
     margin-right: -50vw;
     overflow: hidden;
     margin-bottom: 1rem;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
 }
 
 .full-width-image {
@@ -66,7 +68,6 @@ body {
     margin-top: 1rem;
     font-family: 'Fredoka One', sans-serif;
 }
-
 
 
 .img-class {
@@ -140,4 +141,69 @@ select {
 
 .table {
     background-color: #ffffffa9 !important;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333333;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+h2 {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 2rem;
+    color: #ff3131;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+.ticket-link {
+    color: #249d48;
+    text-decoration: none;
+    margin-left: 4rem;
+}
+
+.ticket-link:hover {
+    color: #1f924c
+    text-decoration: underline;
+}
+
+.table-responsive {
+    color: #333333;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
+}
+
+.logonumero {
+    font-size: 2rem;
+    line-height: 1.6;
+    color: var(--off-white);
+    font-family: 'Fredoka One', sans-serif;
+    margin-bottom: 1rem;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    color: #333333;
+    font-family: 'Nunito', sans-serif;
+}
+
+.insert {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333333;
+    font-family: 'Nunito', sans-serif;
+    margin-bottom: 1rem;
+    margin-left: 4rem;
+    margin-right: 4rem;
 }
