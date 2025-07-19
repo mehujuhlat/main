@@ -9,41 +9,41 @@
 <h4>@ViewBag.EventName</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="TicketId" class="control-label"></label>
+                Lipputyyppi
                 <select asp-for="TicketId" class ="form-control" asp-items="ViewBag.TicketId"></select>
             </div>
             <div class="form-group">
-                <label asp-for="Firstname" class="control-label"></label>
+                Etunimi
                 <input asp-for="Firstname" class="form-control" />
                 <span asp-validation-for="Firstname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lastname" class="control-label"></label>
+                Sukunimi
                 <input asp-for="Lastname" class="form-control" />
                 <span asp-validation-for="Lastname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
+                Osoite
                 <input asp-for="Address" class="form-control" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Postalcode" class="control-label"></label>
+                Postinumero
                 <input asp-for="Postalcode" class="form-control" />
                 <span asp-validation-for="Postalcode" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="City" class="control-label"></label>
+                Kaupunki
                 <input asp-for="City" class="form-control" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Buy" class="btn btn-primary" />
+                <input type="submit" value="Osta" class="btn btn-primary" />
             </div>
         </form>
     </div>

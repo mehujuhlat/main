@@ -84,6 +84,10 @@
     var normalCount = 0;
     var childCount = 0;
 
+    decimal? normalSum = 0;
+    decimal? childSum = 0;
+    decimal? vipSum = 0;
+
     decimal? totalSum = 0;
     foreach( var item in Model.PTickets)
     {
@@ -99,12 +103,15 @@
 
                 switch (item.Ticket.Type) {
                     case 1:
+                        normalSum += item.Price.Value;
                         normalCount++;
                         break;
                     case 2:
+                        vipSum += item.Price.Value;
                         vipCount++;
                         break;
                     case 3:
+                        childSum += item.Price.Value;
                         childCount++;
                         break;
 			        }
@@ -179,26 +186,38 @@
                     </div>
                     <div class="card-body p-1">
                         <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Lippu</th>
+                                    <th class="text-center">Kpl</th>
+                                    <th class="text-end">Tulo</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr>
                                     <td>Peruutetut liput</td>
-                                    <td class="text-end">@cancelCount</td>
+                                    <td class="text-center">@cancelCount</td>
+                                    <td> </td>
                                 </tr>
                                 <tr class="border-top">
                                     <td>VIP-liput</td>
-                                    <td class="text-end">@vipCount</td>
+                                    <td class="text-center">@vipCount</td>
+                                    <td class="text-end">@vipSum €</td>
                                 </tr>
                                 <tr class="border-top">
                                     <td>Normaalit Liput</td>
-                                    <td class="text-end">@normalCount</td>
+                                    <td class="text-center">@normalCount</td>
+                                    <td class="text-end">@normalSum €</td>
                                 </tr>
                                 <tr class="border-top">
                                     <td>Lasten Liput</td>
-                                    <td class="text-end">@childCount</td>
+                                    <td class="text-center">@childCount</td>
+                                    <td class="text-end">@childSum €</td>
                                 </tr>
                                 <tr class="border-top">
                                     <td>Ostetut (ei peruutetut) liput yhteensä</td>
-                                    <td class="text-end">@okCount</td>
+                                    <td class="text-center">@okCount</td>
+                                    <td class="text-end">@totalSum €</td>
                                 </tr>
                             </tbody>
                         </table>
