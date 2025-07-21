@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace client.Areas.Admin.Controllers
 {
@@ -19,6 +20,7 @@ namespace client.Areas.Admin.Controllers
         public List<Pticket> PTickets { get; set; }
         public List<Event> AllEvents { get; set; }
         public Event SelectedEvent { get; set; }
+        public List<Pticket> PTicketShow { get; set; }
     }
 
     [Area("Admin")]
@@ -33,14 +35,19 @@ namespace client.Areas.Admin.Controllers
         }
 
         // GET: Admin/Ptickets
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int id, int Page, int Count)
         {
-
+            if ( Count == 0  )
+            {
+                Count = 500;
+            }
+            var query = _context.Ptickets.Where(p => p.Ticket.Event.EventId == id).Include(p => p.Ticket).ThenInclude(t => t.Event).Include(p => p.User);
             var viewModel = new PTicketsEventsViewModel
             {
-                PTickets = await _context.Ptickets.Where(p => p.Ticket.Event.EventId == id).Include(p => p.Ticket).ThenInclude(t => t.Event).Include(p => p.User).ToListAsync(),
+                PTickets = await query.ToListAsync(),
                 AllEvents = await _context.Events.ToListAsync(),
-                SelectedEvent = await _context.Events.FirstOrDefaultAsync(e => e.EventId == id)
+                SelectedEvent = await _context.Events.FirstOrDefaultAsync(e => e.EventId == id),
+                PTicketShow = await query.Skip(Page*Count).Take(Count).ToListAsync()
             };
             Event ev = await _context.Events.FindAsync(id);
             if (ev != null)
@@ -57,6 +64,10 @@ namespace client.Areas.Admin.Controllers
             if (sum != null)
                 ViewData["TotalSum"] = sum;
             ViewData["id"] = id;
+            ViewData["page"] = Page;
+            ViewData["count"] = Count;
+            
+
             ViewData["TotalTickets"] = ticketCount;
 
             return View(viewModel);

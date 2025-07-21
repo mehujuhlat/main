@@ -65,10 +65,19 @@ app.UseEndpoints(endpoints =>
     pattern: "MyTickets/Buy/{Id}/{ticketId}",
     defaults: new { controller = "MyTickets", action = "Buy" });
 
+
+    endpoints.MapAreaControllerRoute(
+    name: "pTicketsIndex",
+    areaName: "Admin",
+    pattern: "Admin/Ptickets/Index/{Id}/{Page}/{Count}",
+    defaults: new { controller = "Ptickets", action = "Index" });
+
     endpoints.MapControllerRoute(
       name: "areas",
       pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
     );
+
+
 });
 
 app.MapControllerRoute(

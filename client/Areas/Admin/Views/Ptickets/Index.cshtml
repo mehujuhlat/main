@@ -17,12 +17,32 @@
 {
 <div class="d-flex justify-content-between align-items-center">
     <h4>@ViewData["EventName"]</h4>
-    <a href="#bottom">Yhteenveto</a>
 </div>
 }
 
 @if ( Convert.ToInt32(ViewData["id"]) > 0)
 {
+    <div class="d-flex justify-content-between align-items-center">
+    <div class="page-size-selector">
+        Näytä:
+        <select onchange="location = this.value;">
+            @{
+                var pageSizes = new int[] { 5,10, 25, 50, 100, 500 };
+                var currentUrl = $"/Admin/Ptickets/Index/{Model.SelectedEvent.EventId}/0/";
+            }
+            @foreach (var size in pageSizes)
+            {
+                <option value="@(currentUrl + size)"
+                        selected="@(ViewBag.count == size)">
+                    @size
+                </option>
+            }
+        </select>
+        riviä per sivu
+    </div>
+    <a href="#bottom">Yhteenveto</a>
+    </div>
+
 <table class="table table-sm">
     <thead>
         <tr>
@@ -37,8 +57,9 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.PTickets) {
-        
+      
+        @foreach (var item in Model.PTicketShow)
+        {
       <tr style="@(item.Cancel == true ? "background-color: yellow;" : "")">
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
@@ -70,6 +91,16 @@
 }
     </tbody>
     </table>
+   
+    var TotalPages = Math.Ceiling(Model.PTickets.Count / Convert.ToDouble(ViewBag.count));
+    
+    if ( TotalPages > 1)
+    {
+        for (int i = 0; i < TotalPages; i++)
+        {
+        <a href="/Admin/PTickets/Index/@Model.SelectedEvent.EventId/@i/@ViewBag.count">[sivu @(i+1)]</a>
+        }
+    }
 } else
 {
     <div>Valitse tapahtuma</div>
@@ -214,7 +245,7 @@
                                     <td class="text-center">@childCount</td>
                                     <td class="text-end">@childSum €</td>
                                 </tr>
-                                <tr class="border-top">
+                                <tr class="border-top" style="border-top-color:black !important; border-top-width:2px !important;">
                                     <td>Ostetut (ei peruutetut) liput yhteensä</td>
                                     <td class="text-center">@okCount</td>
                                     <td class="text-end">@totalSum €</td>
