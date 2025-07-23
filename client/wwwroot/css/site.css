@@ -44,14 +44,28 @@ body {
     font-family: 'Fredoka One', sans-serif;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 2.5rem;
-    color: #fcfdf2;
-    text-shadow: 1px 1px 3px #ff3131;
+    font-size: 2rem;
+    color: var(--dark-green) !important;
+    text-shadow: 1px 1px 3px var(--off-white);
     text-decoration: none;
 }
 
     .event-title a:hover {
         color: #ff3131;
+        text-decoration: underline;
+    }
+
+.event-title-link {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--dark-green)!important;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: color 0.3s ease;
+}
+
+    .event-title-link:hover {
+        color: #d00000;
         text-decoration: underline;
     }
 
@@ -67,6 +81,7 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     margin-top: 1rem;
     font-family: 'Fredoka One', sans-serif;
+    margin-bottom: 30px;
 }
 
 
@@ -184,7 +199,7 @@ h2 {
 .logonumero {
     font-size: 2rem;
     line-height: 1.6;
-    color: var(--off-white);
+    color: var(--dark-green);
     font-family: 'Fredoka One', sans-serif;
     margin-bottom: 1rem;
     text-align: center;
