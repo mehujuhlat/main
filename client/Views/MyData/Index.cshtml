@@ -34,27 +34,61 @@
             </div>
             <div class="form-group">
                 Salasana
-                <input type="password" asp-for="Password" class="form-control" />
+                <input type="password" id="password" asp-for="Password" class="form-control" />
                 <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                Toista salasana
+                <input type="password" id="confirmPassword" class="form-control" />
+                <span id="passwordMatchError" class="text-danger" style="display:none;">Salasanat eivät täsmää</span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
             <div class="text-danger">@TempData["Alert"]</div>
+            <div>@TempData["answer"]</div>
         </form>
         <br />
      
-        <div> <a asp-action="Remove" asp-route-id="@Model.UserId" id="deleteAccountLink">Poista tunnukseni</a></div>
-
-        <script>
-            document.getElementById('deleteAccountLink').addEventListener('click', function(e) {
-                if (!confirm('Haluatko varmasti poistaa tunnuksesi? Tätä toimintoa ei voi peruuttaa.')) {
-                    e.preventDefault();
-                }
-            });
-        </script>
+        <div> <a asp-action="Remove" asp-route-id="@Model.UserId" id="deleteAccountLink">Poista tietoni</a></div>
 
 
     </div>
 </div>
 
+<script>
+    document.getElementById('deleteAccountLink').addEventListener('click', function(e) {
+        if (!confirm('Haluatko varmasti poistaa tietosi')) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const errorSpan = document.getElementById('passwordMatchError');
+
+        function validatePassword() {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                errorSpan.style.display = 'block';
+                confirmPasswordInput.setCustomValidity("Salasanat eivät täsmää");
+            } else {
+                errorSpan.style.display = 'none';
+                confirmPasswordInput.setCustomValidity('');
+            }
+        }
+
+        passwordInput.addEventListener('input', validatePassword);
+        confirmPasswordInput.addEventListener('input', validatePassword);
+    });
+
+     document.querySelector('form').addEventListener('submit', function(e) {
+        if (passwordInput.value !== confirmPasswordInput.value) {
+            e.preventDefault();
+            errorSpan.style.display = 'block';
+        }
+    });
+</script>

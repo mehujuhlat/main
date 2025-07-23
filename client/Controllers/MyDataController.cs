@@ -95,6 +95,7 @@ namespace client.Controllers
                 {
                     _context.Update(user);
                     await _context.SaveChangesAsync();
+                    TempData["Answer"] = "Tiedot tallennettu";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -107,6 +108,7 @@ namespace client.Controllers
                         throw;
                     }
                 }
+                
                 return RedirectToAction(nameof(Index));
             }
             TempData["Alert"] = "Tapahtui virhe, tarkista syöttämäsi tiedot.";
