@@ -6,11 +6,8 @@
 
 <div style="height: 2rem;"></div>
     <div style="text-align: center">
-        <img src="~/images/lippuotsikko.png" alt="Liputjaohjelma" style="height:4rem" />
+        <img src="~/images/lippuotsikko.png" alt="Liputjaohjelma" style="height:6rem" />
     </div>
-<div style="text-align: center">
-    <img src="~/images/NewFolder/nuoli.png" alt="nuoli" style="height:6rem" />
-</div>
 
 
 @foreach (var item in Model.ComingEvents) {
@@ -40,3 +37,4 @@
     <h3 class ="event-title a text-center"><a asp-action="Details" asp-route-id="@item.EventId">@Html.DisplayFor(modelItem => item.Name)</a></h3>
     <div class="text-center event-countdown"> @DateStart - @DateEnd </div>
 }
+<div style="height:2rem"></div>

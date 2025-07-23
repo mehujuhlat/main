@@ -43,22 +43,24 @@ body {
 .event-title a {
     font-family: 'Fredoka One', sans-serif;
     font-weight: bold;
-    text-transform: uppercase;
     font-size: 2rem;
-    color: var(--dark-green) !important;
+    color: var(--wine) !important;
     text-shadow: 1px 1px 3px var(--off-white);
     text-decoration: none;
 }
 
     .event-title a:hover {
-        color: #ff3131;
+        color: var(--red) !important;
         text-decoration: underline;
-    }
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px) skewY(1deg);
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
 
 .event-title-link {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--dark-green)!important;
+    color: var(--wine)!important;
     text-decoration: none;
     text-transform: capitalize;
     transition: color 0.3s ease;
@@ -167,6 +169,14 @@ p {
     margin-left: 4rem;
     margin-right: 4rem;
 }
+h1 {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 2rem;
+    color: var(--wine);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
 h2 {
     font-family: 'Fredoka One', sans-serif;
     font-size: 2rem;
@@ -180,7 +190,7 @@ h2 {
 .ticket-link {
     color: #249d48;
     text-decoration: none;
-    margin-left: 4rem;
+    margin-left: 6rem;
 }
 
 .ticket-link:hover {
@@ -221,4 +231,5 @@ ul {
     margin-bottom: 1rem;
     margin-left: 4rem;
     margin-right: 4rem;
+    list-style-type: none;
 }

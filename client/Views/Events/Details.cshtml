@@ -7,179 +7,36 @@
     var DateStart = Model.Date.HasValue ? Model.Date.Value.ToString("dd.MM.yyyy HH:mm") : "";
     var DateEnd = Model.DateEnd.HasValue ? Model.DateEnd.Value.ToString("dd.MM.yyyy HH:mm") : "";
     bool active = Model.Active.HasValue ? Model.Active.Value : false;
-    bool isPastEvent = Model.DateEnd.HasValue && Model.DateEnd.Value < DateTime.Now;
 }
 
-@if (isPastEvent)
-{
-    <section class="text-center my-4">
-        <h2>@Model.Name</h2>
-        <p>
-            <strong>@DateStart</strong> – <strong>@DateEnd</strong>
-        </p>
 
-        <div class="col-sm-10 event-detail insert mx-auto">
-            @Html.Raw(Model.Description)
-        </div>
-    </section>
-}
-else
-{
-    <section>
-        <div style="text-align: center">
-            <img src="~/images/logo.png" alt="Logo" style="height:20rem" />
-        </div>
+<section class="container py-4">
+    <div class="text-center">
+        <img src="~/images/logo.png" alt="Logo" style="height:20rem" />
+        <h1 class="mt-4">@Model.Name</h1>
+    </div>
+</section>
 
-        @if (Model.Name == "Porvoon Mehujuhlat 2025")
-        {
-            <div class="logonumero">29.–30.8.2025</div>
-        }
-        else
-        {
-            <div class="logonumero">AFTER PARTY 2025</div>
-        }
-
+<section class="container py-3">
+    <div class="row justify-content-center">
         <div class="col-sm-10 event-detail insert">
             @Html.Raw(Model.Description)
         </div>
-    </section>
-
-    <section>
-        <div style="text-align: center">
-            <img src="~/images/NewFolder/Esiintyjat.png" alt="Esiintyjat" style="height:6.5rem" />
-        </div>
-        <div class="container">
-            @if (Model.Name == "Porvoon Mehujuhlat 2025")
-        {
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist01.jpg" class="card-img-top" alt="Jesse Markkula(FI)">
-                        <div class="card-body">
-                            <h5 class="card-title">Jesse Markkula (FI)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist02.jpg" class="card-img-top" alt="Lime Lights(UK)">
-                        <div class="card-body">
-                            <h5 class="card-title">Lime Lights (UK)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist03.jpg" class="card-img-top" alt="AURORA(NO)">
-                        <div class="card-body">
-                            <h5 class="card-title">AURORA (NO)</h5>
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist04.jpg" class="card-img-top" alt="Colorful Juice Band(NL)">
-                        <div class="card-body">
-                            <h5 class="card-title">Colorful Juice Band (NL)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist05.jpg" class="card-img-top" alt="Iiris Vesik (EE)">
-                        <div class="card-body">
-                            <h5 class="card-title">Iiris Vesik (EE)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist06.jpg" class="card-img-top" alt="Ruusut (FI)">
-                        <div class="card-body">
-                            <h5 class="card-title">Ruusut(FI)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist10.jpg" class="card-img-top" alt="The Citrus Club (US)">
-                        <div class="card-body">
-                            <h5 class="card-title">The Citrus Club (US)</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist08.jpg" class="card-img-top" alt="Tanhuryhmä Tropiikki">
-                        <div class="card-body">
-                            <h5 class="card-title">Tanhuryhmä Tropiikki</h5>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist11.jpg" class="card-img-top" alt="JVK & Special Guests">
-                        <div class="card-body">
-                            <h5 class="card-title">JVK & Special Guests</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
-        else if (Model.Name == "Porvoon Mehujuhlat After Party 2025")
-        {
-            <div class="row justify-content-center">
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist12.jpg" class="card-img-top" alt="Nectar (USA) feat. Juice June (USA)">
-                        <div class="card-body">
-                            <h5 class="card-title">Nectar (USA) feat. Juice June (USA)</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist13.jpg" class="card-img-top" alt="Tropical Voltage (SWE)">
-                        <div class="card-body">
-                            <h5 class="card-title">Tropical Voltage (SWE)</h5>
-                        </div>
-                    </div>
-                </div> <div class="col-md-4">
-                    <div class="card text-center mb-4">
-                        <img src="~/images/NewFolder1/artist14.jpg" class="card-img-top" alt="DJ Tropix (FI)">
-                        <div class="card-body">
-                            <h5 class="card-title">DJ Tropix (FI)</h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
-    </section>
+</section>
 
-    <section class="row">
-        <div style="text-align: center">
-            <img src="~/images/NewFolder/Ohjelma.png" alt="Ohjelma" style="height:6rem" />
-        </div>
-        <div class="col-sm-12 event-detail insert" style="column-count: 2; column-gap: 2rem;">
+<section class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-sm-10 event-detail insert">
             @Html.Raw(Model.Program)
         </div>
-    </section>
+    </div>
+</section>
 
-    <section>
-        <div style="text-align: center">
-            <img src="~/images/NewFolder/Liput2.png" alt="Liput" style="height:6rem" />
-        </div>
-
-        <div class="table-responsive">
+<section class="container py-3">
+    <div class="row justify-content-center">
+        <div class="col-sm-12">
+            <div class="table-responsive">
             <table class="table table-striped">
                 <tbody>
                     @foreach (var item in Model.Tickets)
@@ -194,11 +51,17 @@ else
                         </tr>
                     }
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
+    </div>
+</section>
 
         @if (active)
         {
+    <section class="container py-3">
+        <div class="row justify-content-center">
+            <div>
             @if (User.Identity.IsAuthenticated)
             {
                 <dd class="col-sm-10">
@@ -221,31 +84,7 @@ else
                     <a class="ticket-link" href="/Auth/login">Kirjaudu ostaaksesi lippuja tapahtumaan</a>
                 </dd>
             }
-        }
-    </section>
-
-    <section>
-        <div class="text-center my-4">
-            <img src="~/images/NewFolder/saapuminen.png" alt="Saapuminen" style="height:6rem" />
-        </div>
-        <div>
-        <p><strong>Tapahtumapaikkamme sijaitsee luonnonkauniilla alueella Kokonniemen tapahtumapuistossa, aivan Porvoon keskustan läheisyydessä. Tarkka osoite on Kokonniementie 17, 06100 Porvoo.</strong></p>
-        <p><strong>Saapuminen autolla:</strong> Aja Porvoon keskustasta etelään Kokonniementietä n. 1,5 km. Paikan päällä on maksuton pysäköintialue, mutta tilaa on rajallisesti – suosi kimppakyytejä!</p>
-        <p><strong>Kävellen tai pyörällä:</strong> Tapahtuma-alue sijaitsee kävelymatkan päässä Porvoon vanhasta kaupungista (n. 15 min). Pyöräparkit löytyvät heti sisäänkäynnin läheltä.</p>
-        <p><strong>Julkinen liikenne:</strong> Porvoon linja-autoasema sijaitsee n. 1,5 km päässä tapahtumasta. Kätevä yhteys Helsingistä ja Itä-Uudeltamaalta (mm. Porvoon Liikenne, Onnibus). Katso aikataulut: www.matkahuolto.fi</p>
-        <p><strong>Esteettömyys:</strong> Tapahtuma-alueelle on esteetön sisäänkäynti ja liikuntarajoitteisille varattu pysäköinti aivan portin läheisyydessä. Esteettömät WC-tilat löytyvät pääalueelta.</p>
-        </div>
-
-        <div style="position:relative; padding-bottom:56.25%; padding-left:4rem; height:0; overflow:hidden;">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9017.583878799038!2d25.64599569084209!3d60.380184571257466!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4691f54c82a8bb71%3A0x3113f85febf64680!2sKokonniemen%20tapahtumapuisto!5e0!3m2!1sfi!2sfi!4v1752148374825!5m2!1sfi!2sfi" 
-                width="600" 
-                height="450" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+            </div>
         </div>
     </section>
 }
