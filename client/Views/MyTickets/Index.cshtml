@@ -4,11 +4,11 @@
     ViewData["Title"] = "Lippuni";
 }
 
-Osta lippu tapahtumaan
+<h2>Osta lippu tapahtumaan</h2>
 <ul>
 @foreach (var item in Model.AllEvents)
 {
-        <li><a asp-action="Buy" asp-route-id="@item.EventId">@item.Name</a></li>
+        <li><a class="ticket-link" asp-action="Buy" asp-route-id="@item.EventId">@item.Name</a></li>
 }
 </ul>
 
