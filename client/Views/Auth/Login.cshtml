@@ -1,10 +1,10 @@
 ﻿@model client.Models.User
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Kirjaudu";
 }
 
-<h2>Login</h2>
+<h2>Kirjaudu</h2>
 
 <hr />
 <div class="row">
@@ -22,7 +22,7 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-success" />
+                <input type="submit" value="Kirjaudu" class="btn btn-success" />
             </div>
         </form>
         <div><a asp-action="Recover">Salasana unohtunut?</a></div>
