@@ -29,62 +29,67 @@
     <div class="row justify-content-center">
         <div class="col-sm-10 event-detail insert">
             @Html.Raw(Model.Program)
-        </div>
-    </div>
-</section>
 
-<section class="container py-3">
-    <div class="row justify-content-center">
-        <div class="col-sm-12">
-            <div class="table-responsive">
-            <table class="table table-striped">
-                <tbody>
-                    @foreach (var item in Model.Tickets)
-                    {
-                        <tr>
-                            <td>@item.Description</td>
-                            <td class="text-right">@item.Price?.ToString("0.00") €</td>
+
+
+            <section class="container py-3">
+                <div class="row justify-content-center">
+                    <div class="col-sm-12">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tbody>
+                                    @foreach (var item in Model.Tickets)
+                                    {
+                                        <tr>
+                                            <td>@item.Description</td>
+                                            <td class="text-right">@item.Price?.ToString("0.00") €</td>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                <td><a href="/MyTickets/Buy/@Model.EventId/@item.TicketId" class="btn btn-sm btn-outline-success">Osta</a></td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            @if (active)
+            {
+                <section class="container py-3">
+                    <div class="row justify-content-center">
+                        <div>
                             @if (User.Identity.IsAuthenticated)
                             {
-                                <td><a href="/MyTickets/Buy/@Model.EventId/@item.TicketId" class="btn btn-sm btn-outline-success">Osta</a></td>
+                                <dd class="col-sm-10">
+                                    <a class="ticket-link" href="/MyTickets/Buy/@Model.EventId">Osta lippu tapahtumaan</a>
+                                </dd>
+
+                                @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
+                                {
+                                    <dd class="col-sm-10">
+                                        <a class="ticket-link" asp-action="Edit" asp-area="Admin" asp-route-id="@Model.EventId">Muokkaa tapahtumaa</a>
+                                    </dd>
+                                    <dd class="col-sm-10">
+                                        <a class="ticket-link" href="/Admin/Tickets/Index/@Model.EventId">Muokkaa/Luo lippuja</a>
+                                    </dd>
+                                }
                             }
-                        </tr>
-                    }
-                </tbody>
-                </table>
-            </div>
+                            else
+                            {
+                                <dd class="col-sm-10">
+                                    <a class="ticket-link" href="/Auth/login">Kirjaudu ostaaksesi lippuja tapahtumaan</a>
+                                </dd>
+                            }
+                        </div>
+                    </div>
+                </section>
+            }
+
+
+
         </div>
     </div>
 </section>
-
-        @if (active)
-        {
-    <section class="container py-3">
-        <div class="row justify-content-center">
-            <div>
-            @if (User.Identity.IsAuthenticated)
-            {
-                <dd class="col-sm-10">
-                    <a class="ticket-link" href="/MyTickets/Buy/@Model.EventId">Osta lippu tapahtumaan</a>
-                </dd>
-
-                @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
-                {
-                    <dd class="col-sm-10">
-                        <a class="ticket-link" asp-action="Edit" asp-area="Admin" asp-route-id="@Model.EventId">Muokkaa tapahtumaa</a>
-                    </dd>
-                    <dd class="col-sm-10">
-                        <a class="ticket-link" href="/Admin/Tickets/Index/@Model.EventId">Muokkaa/Luo lippuja</a>
-                    </dd>
-                }
-            }
-            else
-            {
-                <dd class="col-sm-10">
-                    <a class="ticket-link" href="/Auth/login">Kirjaudu ostaaksesi lippuja tapahtumaan</a>
-                </dd>
-            }
-            </div>
-        </div>
-    </section>
-}
