@@ -96,10 +96,12 @@
     
     if ( TotalPages > 1)
     {
-        for (int i = 0; i < TotalPages; i++)
+        <ul class="pagination">
+        @for (int i = 0; i < TotalPages; i++)
         {
-        <a href="/Admin/PTickets/Index/@Model.SelectedEvent.EventId/@i/@ViewBag.count">[sivu @(i+1)]</a>
+                <li class="@(i == ViewBag.page ? "active" : "") page-item"><a class="page-link" href="/Admin/PTickets/Index/@Model.SelectedEvent.EventId/@i/@ViewBag.count">@(i + 1)</a></li>
         }
+        </ul>
     }
 } else
 {
@@ -184,7 +186,7 @@
                                 <th>Päivä</th>
                                 <th>Aikuiset</th>
                                 <th>Lapset</th>
-                                <th>VIP-Kävijät</th>
+                                <th>VIP</th>
                                 <th>Yhteensä</th>
                             </tr>
                         </thead>
@@ -236,7 +238,7 @@
                                     <td class="text-end">@vipSum €</td>
                                 </tr>
                                 <tr class="border-top">
-                                    <td>Normaalit Liput</td>
+                                    <td>Aikuisten Liput</td>
                                     <td class="text-center">@normalCount</td>
                                     <td class="text-end">@normalSum €</td>
                                 </tr>
