@@ -126,6 +126,16 @@ p {
     margin-left: 4rem;
     margin-right: 4rem;
 }
+
+@media (max-width: 576px) {
+    p {
+        margin-left: 0rem;
+        margin-right: 0rem;
+    }
+}
+
+
+
 h1 {
     font-family: 'Fredoka One', sans-serif;
     font-size: 2rem;

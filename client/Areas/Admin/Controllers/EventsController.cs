@@ -121,7 +121,8 @@ namespace client.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Details", "Events", new { area = "", id });
+                return View(@event);
+                //return RedirectToAction("Details", "Events", new { area = "", id });
             }
             return View(@event);
         }
