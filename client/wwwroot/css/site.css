@@ -173,6 +173,14 @@ h2 {
     margin-right: 4rem;
 }
 
+@media (max-width: 576px) {
+    .table-responsive {
+        margin-left: 0rem;
+        margin-right: 0rem;
+    }
+}
+
+
 .logonumero {
     font-size: 2rem;
     line-height: 1.6;
