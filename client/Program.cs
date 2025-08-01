@@ -20,6 +20,7 @@ builder.Services.AddDbContext<MehujuhlatContext>(options =>
 options.UseSqlServer(dbConnectionString));
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<AzureBlobStorageService>();
+builder.Services.AddHttpClient<RecaptchaService>();
 builder.Services.AddSignalR();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

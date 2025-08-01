@@ -17,10 +17,12 @@ namespace client.Controllers
     public class RegisterController : Controller
     {
         private readonly MehujuhlatContext _context;
+        private readonly RecaptchaService _recaptchaService;
 
-        public RegisterController(MehujuhlatContext context)
+        public RegisterController(MehujuhlatContext context, RecaptchaService recaptchaService)
         {
             _context = context;
+            _recaptchaService = recaptchaService;
         }
 
         // GET: Register/Create
@@ -54,11 +56,18 @@ namespace client.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Firstname,Lastname,Email,Password,Nickname")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,Firstname,Lastname,Email,Password,Nickname")] User user, string gRecaptchaResponse)
         {
             ModelState.Remove("Salt");
+            Debug.WriteLine("gRecaptchaResponse " + gRecaptchaResponse);
+            var recaptchaValid = await _recaptchaService.VerifyCaptcha(gRecaptchaResponse);
+            if (!recaptchaValid)
+            {
+                ViewBag.recaptchaError = "ReCAPTCHA tunnistus epäonnistui.";
+                return View("Index",user);
+            }
 
-            if (ModelState.IsValid)
+                if (ModelState.IsValid)
             {
 
                 var emailInUse = await _context.Users.AnyAsync(k => k.Email == user.Email);
@@ -152,7 +161,7 @@ namespace client.Controllers
                 ViewBag.newId = newId;
                 return View("Validation", user);
             }
-            return View(user);
+            return View("Index",user);
         }
       
     }

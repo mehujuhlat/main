@@ -1,4 +1,5 @@
 ﻿@model client.Models.User
+@using client.App_Code
 
 @{
     ViewData["Title"] = "Rekisteröidy";
@@ -44,12 +45,31 @@
                 <input type="password" id="confirmPassword" class="form-control" />
                 <span id="passwordMatchError" class="text-danger" style="display:none;">Salasanat eivät täsmää</span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Rekisteröidy" class="btn btn-primary" />
+            <input type="hidden" id="gRecaptchaResponse" name="gRecaptchaResponse" />
+            
+            <div class="d-sm-flex justify-content-between  align-items-center">
+                <div>
+                    <div class="g-recaptcha" data-sitekey="@AppSecrets.SiteKey" data-callback="onRecaptchaSuccess"></div>
+                    <span class="text-danger">@ViewBag.recaptchaError</span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" id="submitButton" value="Rekisteröidy" class="btn btn-primary" />
+                </div>
             </div>
+
+
         </form>
     </div>
 </div>
+
+<script>
+         function onRecaptchaSuccess(token) {
+             document.getElementById('gRecaptchaResponse').value = token;
+             document.getElementById('submitButton').disabled = false;
+         }
+</script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

@@ -22,8 +22,14 @@ namespace client.App_Code
     public static class AppSecrets
     {
         public static string EmailPassword { get; private set; } = null!;
+
+        public static string SiteKey { get; private set; } = null!;
+        public static string SecretKey { get; private set; } = null!;
+
         public static void Initialize(IConfiguration config)
-        {  
+        {
+            SiteKey = config["captchasitekey"] ?? throw new Exception("captchasitekey missing");
+            SecretKey = config["captchasecretkey"] ?? throw new Exception("captchasecretkey missing");
             EmailPassword = config["emailpassword"] ?? throw new Exception("emailpassword missing");
         }
     }
