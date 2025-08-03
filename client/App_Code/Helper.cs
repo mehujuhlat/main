@@ -44,7 +44,7 @@ namespace client.App_Code
             _env = env;
             }
 
-        public static string appUrl => _env.IsDevelopment() ? "https://localhost:7137" : "https://mehujuhlat.azurewebsites.net";
+        public static string appUrl => _env.IsDevelopment() ? "https://localhost:7137" : "https://mehujuhlat-gmdyasgqb9ddbucj.swedencentral-01.azurewebsites.net";
 
 
         public static bool IsNullableBitTrue(int? nullableInt, int bitPosition)
