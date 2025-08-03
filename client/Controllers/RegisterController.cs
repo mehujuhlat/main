@@ -80,7 +80,7 @@ namespace client.Controllers
                 
                 var nicknameInUse = await _context.Users.AnyAsync(k => k.Nickname == user.Nickname);
                 if (nicknameInUse)
-                    ViewBag.nicknameInUse = "Lempinimi on jo käytössä";
+                    ViewBag.nicknameInUse = "Nimimerkki on jo käytössä";
 
                 if ( nicknameInUse || emailInUse || !emailIsCorrect)
                     return View("Index",user);
@@ -132,12 +132,12 @@ namespace client.Controllers
 </head>
 <body>
     <div class='header'>
-        <h1>Tervetuloa mehujuhliin, {user.Nickname ?? user.Firstname}!</h1>
+        <h1>Tervetuloa Mehujuhliin, {user.Nickname ?? user.Firstname}!</h1>
     </div>
     
     <p>Hei {user.Firstname} {user.Lastname},</p>
     
-    <p>Kiitos rekisteröitymisestäsi Mehujuhliimme! Vahvista vielä sähköpostiosoitteesi alla olevasta painikkeesta:</p>
+    <p>Kiitos rekisteröitymisestäsi Mehujuhliimme! Vahvista vielä rekisteröityminen alla olevasta painikkeesta:</p>
     
     <div style='text-align: center;'>
         <a href='{Helper.appUrl}/Register/Confirm/{newId}' class='button'>Vahvista rekisteröityminen</a>

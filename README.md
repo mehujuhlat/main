@@ -3,7 +3,7 @@
 Loppuprojekti Careerian ohjelmoinnin osatutkintoa varten (2025) <br>
 Käytettyjä tekniikoita
 <ul>
-	<li>ASP.NET CORE 8</L>
+	<li>ASP.NET Core 8</L>
 	<li>MVC</li>
 	<li>Entity Framework Core 9</li>
 	<li>Azure KeyVault (ConnectionStringit ja salasanat)</li>
