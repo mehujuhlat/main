@@ -36,10 +36,12 @@ namespace client.Controllers
     public class AuthController : Controller
     {
         private readonly MehujuhlatContext _context;
+        private readonly RecaptchaService _recaptchaService;
 
-        public AuthController(MehujuhlatContext context)
+        public AuthController(MehujuhlatContext context, RecaptchaService recaptchaService)
         {
             _context = context;
+            _recaptchaService = recaptchaService;
         }
 
         public IActionResult Login()
@@ -55,8 +57,15 @@ namespace client.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login([Bind("Email,Password")] LoginUser loginUser)
+        public async Task<IActionResult> Login([Bind("Email,Password")] LoginUser loginUser, string gRecaptchaResponse)
         {
+            Debug.WriteLine("gRecaptchaResponse " + gRecaptchaResponse);
+            var recaptchaValid = await _recaptchaService.VerifyCaptcha(gRecaptchaResponse);
+            if (!recaptchaValid)
+            {
+                ViewBag.recaptchaError = "ReCAPTCHA tunnistus epäonnistui.";
+                return View();
+            }
 
             if (ModelState.IsValid)
             {
