@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using NuGet.Common;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -34,15 +35,20 @@ namespace client.Controllers
         [HttpGet]
         public async Task<IActionResult> Confirm(string? id)
         {
-            
-            if (id == null)
+      
+            if (id == null )
             {
                 return NotFound();
             }
+          
             User? u = NewUser.get(id);
             if (u == null)
                 return NotFound();
 
+            if (await _context.Users.AnyAsync(a => a.Email == u.Email))
+            {
+                return View("AlreadyConfirmed", u);
+            }
             var salt = Psw.GenerateSalt();
             u.Password = Psw.HashPassword(u.Password, salt);
             u.Salt = salt;
