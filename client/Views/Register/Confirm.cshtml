@@ -1,7 +1,7 @@
 ﻿@model client.Models.User
 
 @{
-    ViewData["Title"] = "Rekisteröitymisesi on vahvistettu";
+    ViewData["Title"] = "Vahvista rekisteröitymisesi";
 }
 
 <div class="container mt-5">
@@ -9,24 +9,17 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    <h2 class="card-title">Rekisteröitymisesi on vahvistettu!</h2>
+                    <h2 class="card-title">Vahvista rekisteröitymisesi</h2>
                 </div>
                 <div class="card-body">
-                    <h3 class="mb-4">Tervetuloa mehujuhliin, @(Model.Nickname ?? Model.Firstname)!</h3>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <ul class="list-group">
-                                <li class="list-group-item"><strong>Etunimi:</strong> @Model.Firstname</li>
-                                <li class="list-group-item"><strong>Sukunimi:</strong> @Model.Lastname</li>
-                                <li class="list-group-item"><strong>Nimimerkki:</strong> @(Model.Nickname ?? "-")</li>
-                                <li class="list-group-item"><strong>Sähköposti:</strong> @Model.Email</li>
-                            </ul>
+                    <p>Olet vahvistamassa tunnuksen luomista sähköpostille: <strong>@Model.Email</strong>.</p>
+                    <form asp-action="Confirmed">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" name="newUserId" value="@ViewBag.id" />
+                        <div class="form-group">
+                            <input type="submit" value=" Vahvista tunnus " class="btn btn-primary" />
                         </div>
-                        <div class="col-md-6 text-center">
-                            <a href="/Auth/Login" class="btn btn-primary">Jatka kirjautumiseen</a>
-                        </div>
-                    </div>
+                        </form>
                 </div>
             </div>
         </div>

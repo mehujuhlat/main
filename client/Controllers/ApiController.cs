@@ -21,12 +21,6 @@ namespace client.Controllers
         }
 
 
-        public JsonResult dnu()
-        {
-            return Json(NewUser.Storage);
-        }
-
-
         public ActionResult GenQR(string id)
         {
             if (string.IsNullOrEmpty(id))

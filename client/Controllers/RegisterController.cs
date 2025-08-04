@@ -35,32 +35,42 @@ namespace client.Controllers
         [HttpGet]
         public async Task<IActionResult> Confirm(string? id)
         {
-      
             if (id == null )
             {
                 return NotFound();
             }
-          
             User? u = NewUser.get(id);
             if (u == null)
                 return NotFound();
 
             if (await _context.Users.AnyAsync(a => a.Email == u.Email))
-            {
                 return View("AlreadyConfirmed", u);
-            }
+
+            ViewBag.id = id;
+     
+            return View(u);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Confirmed(string newUserId)
+        {
+            User? u = NewUser.get(newUserId);
+            if (u == null)
+                return NotFound();
+
             var salt = Psw.GenerateSalt();
             u.Password = Psw.HashPassword(u.Password, salt);
             u.Salt = salt;
             _context.Add(u);
             await _context.SaveChangesAsync();
+            NewUser.Remove(newUserId);
             return View(u);
         }
-
-        // POST: Register/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+            // POST: Register/Create
+            // To protect from overposting attacks, enable the specific properties you want to bind to.
+            // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+            [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,Firstname,Lastname,Email,Password,Nickname")] User user, string gRecaptchaResponse)
         {
