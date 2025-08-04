@@ -12,7 +12,8 @@
                     <h2 class="card-title">Vahvista rekisteröitymisesi</h2>
                 </div>
                 <div class="card-body">
-                    <p>Olet vahvistamassa tunnuksen luomista sähköpostille: <strong>@Model.Email</strong>.</p>
+                    <p>Olet vahvistamassa tunnuksen luomista sähköpostille: <strong>@Html.DisplayFor(model => model.Email)</strong>.</p>
+                    <p>
                     <form asp-action="Confirmed">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input type="hidden" name="newUserId" value="@ViewBag.id" />
@@ -20,6 +21,7 @@
                             <input type="submit" value=" Vahvista tunnus " class="btn btn-primary" />
                         </div>
                         </form>
+                    </p>
                 </div>
             </div>
         </div>
