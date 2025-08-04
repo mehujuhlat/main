@@ -31,7 +31,7 @@ namespace client.Controllers
             return View();
         }
 
-    
+        [HttpGet]
         public async Task<IActionResult> Confirm(string? id)
         {
             

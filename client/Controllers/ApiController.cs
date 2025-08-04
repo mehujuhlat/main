@@ -20,6 +20,13 @@ namespace client.Controllers
             _context = context;
         }
 
+
+        public JsonResult dnu()
+        {
+            return Json(NewUser.Storage);
+        }
+
+
         public ActionResult GenQR(string id)
         {
             if (string.IsNullOrEmpty(id))
