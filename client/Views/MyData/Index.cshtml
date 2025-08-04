@@ -4,11 +4,14 @@
     ViewData["Title"] = "Tietoni";
 }
 
-<h2>TIETONI</h2>
-
-<hr />
-<div class="row">
-    <div class="col-md-6">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">TIETONI</h2>
+                </div>
+                <div class="card-body">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="UserId" />
@@ -52,9 +55,12 @@
      
         <div> <a asp-action="Remove" asp-route-id="@Model.UserId" id="deleteAccountLink">Poista tietoni</a></div>
 
-
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script>
     document.getElementById('deleteAccountLink').addEventListener('click', function(e) {

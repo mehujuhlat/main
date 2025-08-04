@@ -5,11 +5,14 @@
     ViewData["Title"] = "Kirjaudu";
 }
 
-<h2>Kirjaudu</h2>
-
-<hr />
-<div class="row">
-    <div class="col-md-6">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">KIRJAUDU</h2>
+                </div>
+                <div class="card-body">
         <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -37,8 +40,12 @@
         <div><a asp-action="Recover">Salasana unohtunut?</a></div>
         <span class="text-black">@TempData["pswChange"]</span>
         <span class="text-danger">@ViewBag.loginMessage</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <script>
     function onRecaptchaSuccess(token) {
