@@ -2,7 +2,7 @@
 @model client.Models.Event
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.Name;
 
     var DateStart = Model.Date.HasValue ? Model.Date.Value.ToString("dd.MM.yyyy HH:mm") : "";
     var DateEnd = Model.DateEnd.HasValue ? Model.DateEnd.Value.ToString("dd.MM.yyyy HH:mm") : "";
@@ -42,7 +42,7 @@
                                 <td class="text-right">@item.Price?.ToString("0.00") €</td>
                                 @if (User.Identity.IsAuthenticated)
                                 {
-                                    <td><a href="/MyTickets/Buy/@Model.EventId/@item.TicketId" class="btn btn-sm btn-outline-success">Osta</a></td>
+                                    <td><a href="/MyTickets/Buy/@Model.EventId/@item.TicketId" class="btn btn-sm btn-success">Osta</a></td>
                                 }
                             </tr>
                         }
@@ -59,7 +59,7 @@
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <div class="mb-2">
-                                    <a class="btn btn-sm btn-outline-primary" href="/MyTickets/Buy/@Model.EventId">Osta lippu tapahtumaan</a>
+                                    <a class="btn btn-sm btn-success" href="/MyTickets/Buy/@Model.EventId">Osta lippu tapahtumaan</a>
                                 </div>
 
                                 @if (User.HasClaim(c => c.Type == "IsAdmin" && c.Value == "True"))
@@ -75,7 +75,7 @@
                             else
                             {
                                 <div class="mb-2">
-                                    <a class="btn btn-sm btn-outline-primary" href="/Auth/login">Kirjaudu ostaaksesi lippuja</a>
+                                    <a class="btn btn-sm btn-success" href="/Auth/login">Kirjaudu ostaaksesi lippuja</a>
                                 </div>
                             }
                         </div>

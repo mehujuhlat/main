@@ -10,17 +10,19 @@
 @{
     var userId = @User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
     int.TryParse(userId, out int id);
+    ViewData["CurrentUserId"] = id;
 }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.min.js"></script>
 
-
-<h2>VIESTIT</h2>
-
-
-@{
-    ViewData["CurrentUserId"] = id; 
-}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">VIESTIT</h2>
+                </div>
+                <div class="card-body">
 <div class="d-flex justify-content-between align-items-center">
 <h3>Yksityinen</h3>
 <div class="toggle-chat" data-target="privateMessagesContainer">[Piilota]</div>
@@ -63,10 +65,14 @@
             <label class="form-check-label private-message-label" for="PrivateInput">Yksityinen viesti</label>
         </div>
         <div class="form-group">
-            <input id="sendButton" value="Lähetä viesti" class="btn btn-primary" />
+            <input id="sendButton" value="Lähetä viesti" class="btn btn-success" />
         </div>
-    </div>
-</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 <script src="/js/msg.js"></script>
 
 

@@ -40,7 +40,6 @@
 
 .toggle-chat {
     cursor: pointer;
-    color: blue;
     text-decoration: underline;
     margin-left: 10px;
     font-weight: normal;
@@ -71,4 +70,7 @@
         padding-left: 0rem;
         padding-right: 0rem;
     }
+}
+a {
+    color: var(--wine);
 }

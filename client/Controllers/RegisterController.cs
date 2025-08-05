@@ -153,7 +153,7 @@ namespace client.Controllers
     
     <p>Hei {user.Firstname} {user.Lastname},</p>
     
-    <p>Kiitos rekisteröitymisestäsi Mehujuhliimme! Vahvista vielä rekisteröityminen alla olevasta painikkeesta:</p>
+    <p>Kiitos rekisteröitymisestäsi Mehujuhliin! Vahvista vielä rekisteröityminen alla olevasta painikkeesta:</p>
     
     <div style='text-align: center;'>
         <a href='{Helper.appUrl}/Register/Confirm/{newId}' class='button'>Vahvista rekisteröityminen</a>

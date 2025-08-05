@@ -78,7 +78,7 @@ body {
 }
 
 .event-countdown {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #ff3131;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     margin-top: 1rem;
@@ -110,11 +110,11 @@ select {
     }
 
 .card {
-    background-color: #ffffffa9 !important;
+    background-color: #ffffff86 !important;
 }
 
 .table {
-    background-color: #ffffffa9 !important;
+    background-color: #ffffff94 !important;
 }
 
 p {

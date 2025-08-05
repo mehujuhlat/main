@@ -56,7 +56,7 @@
                     <span class="text-danger">@ViewBag.recaptchaError</span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" id="submitButton"  value="Rekisteröidy" class="btn btn-primary" />
+                    <input type="submit" id="submitButton"  value="Rekisteröidy" class="btn btn-success" />
                 </div>
             </div>
 
@@ -78,11 +78,12 @@
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirmPassword');
-        const errorSpan = document.getElementById('passwordMatchError');
+        
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
+    const errorSpan = document.getElementById('passwordMatchError');
 
+    document.addEventListener('DOMContentLoaded', function() {
         function validatePassword() {
             if (passwordInput.value !== confirmPasswordInput.value) {
                 errorSpan.style.display = 'block';
@@ -92,7 +93,6 @@
                 confirmPasswordInput.setCustomValidity('');
             }
         }
-
         passwordInput.addEventListener('input', validatePassword);
         confirmPasswordInput.addEventListener('input', validatePassword);
     });
@@ -102,6 +102,7 @@
         if (passwordInput.value !== confirmPasswordInput.value) {
             e.preventDefault();
             errorSpan.style.display = 'block';
+            confirmPasswordInput.setCustomValidity("Salasanat eivät täsmää");
         }
     });
 </script>

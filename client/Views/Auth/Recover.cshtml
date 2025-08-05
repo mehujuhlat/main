@@ -19,11 +19,11 @@ Annettuun sähköpostiin lähetetään sinulle linkki, jonka avulla voit luoda u
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
 
-                <input asp-for="Email" class="form-control" placeholder="sähköposti" />
+                <input asp-for="Email" class="form-control"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Lähetä linkki" class="btn btn-primary" />
+                <input type="submit" value="Lähetä linkki" class="btn btn-success" />
             </div>
         </form>
         @ViewBag.NotFound
