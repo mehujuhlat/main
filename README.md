@@ -1,7 +1,7 @@
 ﻿# Porvoon Mehujuhlat
 
-Loppuprojekti Careerian ohjelmoinnin osatutkintoa varten (2025) <br>
-Käytettyjä tekniikoita
+Loppuprojekti Careerian ohjelmoinnin osatutkintoa varten (2025) <br><br>
+<strong>Käytettyjä tekniikoita</strong>
 <ul>
 	<li>ASP.NET Core 8</L>
 	<li>MVC</li>
