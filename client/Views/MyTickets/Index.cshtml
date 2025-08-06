@@ -21,7 +21,7 @@
 }
 </ul>
 
-<h2>LIPPUNI</h2>
+                    <h2 class="card-title">LIPPUNI</h2>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
     @foreach (var item in Model.UserTickets)
@@ -29,7 +29,7 @@
         <div class="col">
             <div class="card h-100 @(item.Cancel.Value ? "border-danger" : "border-dark") shadow-sm">
                 <div class="card-header @(item.Cancel.Value ? "bg-danger text-white" : "bg-success text-white")">
-                    <h5 class="card-title mb-0 @(item.Cancel.Value ? "text-decoration-line-through" : "")">
+                    <h5 class="card-title-ticket mb-0 @(item.Cancel.Value ? "text-decoration-line-through" : "")">
                         <i class="fas fa-ticket-alt me-2"></i>
                         @Html.DisplayFor(modelItem => item.Ticket.Event.Name)
                     </h5>

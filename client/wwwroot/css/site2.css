@@ -74,3 +74,11 @@
 a {
     color: var(--wine);
 }
+
+.card-title {
+    color: var(--wine) 
+}
+
+.card-title-ticket {
+    color: white
+}
